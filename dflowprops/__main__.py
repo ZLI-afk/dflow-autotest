@@ -25,8 +25,8 @@ import sys
 #from dflowrelax.VASP_flow import main_vasp
 #from dflowrelax.ABACUS_flow import main_abacus
 #from dflowprops.LAMMPS_flow import main_lammps
-from LAMMPS_flow import main_lammps
-from VASP_flow import main_vasp
+from .LAMMPS_flow import main_lammps
+from .VASP_flow import main_vasp
 
 def main():
     parser = argparse.ArgumentParser()
