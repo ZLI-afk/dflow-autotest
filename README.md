@@ -5,7 +5,7 @@ This is "general properties test" (elastic parameters, EOS, surface energy, inte
 
 ## Easy Install：
 ```
-pip install ""
+pip install "git+https://github.com/ZLI-afk/dflow-props.git"
 ```
 
 ## Quick Start
