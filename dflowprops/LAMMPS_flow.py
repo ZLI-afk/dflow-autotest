@@ -82,7 +82,7 @@ def main_lammps():
 
     cwd = os.getcwd()
     work_dir = cwd
-    wf = Workflow(name="Props")
+    wf = Workflow(name="props")
 
     propsmake = Step(
         name="Propsmake",
