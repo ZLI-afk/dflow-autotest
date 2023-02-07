@@ -33,7 +33,6 @@ from dflow.python import upload_packages
 
 import shutil
 upload_packages.append(__file__)
-upload_packages.append(os.path.join(os.getcwd(), 'lib'))
 
 from .lib.utils import return_prop_list
 

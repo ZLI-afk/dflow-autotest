@@ -1,5 +1,9 @@
 #!/usr/bin/env python3
 
+from dflow.python import upload_packages
+upload_packages.append(__file__)
+
+
 def return_prop_list(parameters):
     prop_list = []
     for ii in parameters:
