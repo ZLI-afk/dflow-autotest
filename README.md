@@ -1,5 +1,5 @@
-# dflow-relax
-## Relaxation with VASP, ABACUS, and LAMMPS in autotest.
+# dflow-props
+## General properties test with VASP, ABACUS, and LAMMPS in autotest.
 This workflow is a part of [AI Square](https://aissquare.com/). We want to refract the autotest code based on dflow. 
 This is "general properties test" (elastic parameters, EOS, surface energy, interstitial energy, vacancy energy and stacking fault energy supported so far) using VASP, LAMMPS, or ABACUS.
 
