@@ -28,22 +28,21 @@ sys.path.append("../dflowprops")
 from dflowprops.LAMMPS_flow import main_lammps
 
 
-def main():
-    parser = argparse.ArgumentParser()
-    parser.add_argument("--vasp", help="Using VASP to perform relaxation",
-                        action="store_true")
-    parser.add_argument("--abacus", help="Using ABACUS to perform relaxation",
-                        action="store_true")
-    parser.add_argument("--lammps", help="Using LAMMPS to perform relaxation",
-                        action="store_true")
-    args = parser.parse_args()
+parser = argparse.ArgumentParser()
+parser.add_argument("--vasp", help="Using VASP to perform relaxation",
+                    action="store_true")
+parser.add_argument("--abacus", help="Using ABACUS to perform relaxation",
+                    action="store_true")
+parser.add_argument("--lammps", help="Using LAMMPS to perform relaxation",
+                    action="store_true")
+args = parser.parse_args()
 
-    if args.vasp:
-        pass
-    elif args.abacus:
-        pass
-    elif args.lammps:
-        main_lammps()
+if args.vasp:
+    pass
+elif args.abacus:
+    pass
+elif args.lammps:
+    main_lammps()
 
 if __name__ == '__main__':
     main_lammps()
