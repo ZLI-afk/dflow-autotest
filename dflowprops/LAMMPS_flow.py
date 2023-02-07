@@ -35,7 +35,7 @@ upload_packages.append(__file__)
 
 
 def main_lammps():
-    from LAMMPS_OPs import PropsMakeLAMMPS, LAMMPS, PropsPostLAMMPS
+    from .LAMMPS_OPs import PropsMakeLAMMPS, LAMMPS, PropsPostLAMMPS
     global_param = loadfn("global.json")
     work_dir = global_param.get("work_dir", None)
     email = global_param.get("email", None)
