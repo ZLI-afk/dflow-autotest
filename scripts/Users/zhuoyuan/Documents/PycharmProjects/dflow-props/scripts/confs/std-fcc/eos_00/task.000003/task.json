@@ -1,0 +1,23 @@
+{
+    "type": "eos",
+    "skip": false,
+    "vol_start": 0.6,
+    "vol_end": 1.4,
+    "vol_step": 0.2,
+    "cal_setting": {
+        "etol": 0,
+        "ftol": 1e-10,
+        "relax_pos": true,
+        "relax_shape": false,
+        "relax_vol": false
+    },
+    "reproduce": false,
+    "vol_abs": false,
+    "cal_type": "relaxation",
+    "scale2equi": [
+        0.8434326653017492,
+        0.9283177667225558,
+        1.0,
+        1.0626585691826111
+    ]
+}

@@ -1,0 +1,124 @@
+2023-02-07 10:31:33,980 - INFO : start auto-testing
+2023-02-07 10:31:33,981 - WARNING : /Users/zhuoyuan/Documents/PycharmProjects/dflow-props/scripts/confs/std-bcc/eos_00 already exists
+2023-02-07 10:31:33,981 - INFO : treat vol_start and vol_end as relative volume
+2023-02-07 02:39:07,271 - INFO : start auto-testing
+2023-02-07 02:39:07,272 - WARNING : /tmp/inputs/artifacts/input/Users/zhuoyuan/Documents/PycharmProjects/dflow-props/scripts/confs/std-bcc/eos_00 already exists
+2023-02-07 02:39:07,272 - INFO : treat vol_start and vol_end as relative volume
+2023-02-07 02:39:07,275 - INFO : make_input_file setting etol to 0
+2023-02-07 02:39:07,275 - INFO : make_input_file setting ftol to 1e-10
+2023-02-07 02:39:07,276 - INFO : make_input_file setting etol to 0
+2023-02-07 02:39:07,276 - INFO : make_input_file setting ftol to 1e-10
+2023-02-07 02:39:07,277 - INFO : make_input_file setting etol to 0
+2023-02-07 02:39:07,277 - INFO : make_input_file setting ftol to 1e-10
+2023-02-07 02:39:07,278 - INFO : make_input_file setting etol to 0
+2023-02-07 02:39:07,278 - INFO : make_input_file setting ftol to 1e-10
+2023-02-07 02:39:07,279 - WARNING : /tmp/inputs/artifacts/input/Users/zhuoyuan/Documents/PycharmProjects/dflow-props/scripts/confs/std-bcc/elastic_00 already exists
+2023-02-07 02:39:07,318 - INFO : make_input_file setting etol to 0
+2023-02-07 02:39:07,318 - INFO : make_input_file setting ftol to 1e-10
+2023-02-07 02:39:07,319 - INFO : make_input_file setting etol to 0
+2023-02-07 02:39:07,319 - INFO : make_input_file setting ftol to 1e-10
+2023-02-07 02:39:07,320 - INFO : make_input_file setting etol to 0
+2023-02-07 02:39:07,320 - INFO : make_input_file setting ftol to 1e-10
+2023-02-07 02:39:07,321 - INFO : make_input_file setting etol to 0
+2023-02-07 02:39:07,321 - INFO : make_input_file setting ftol to 1e-10
+2023-02-07 02:39:07,322 - INFO : make_input_file setting etol to 0
+2023-02-07 02:39:07,322 - INFO : make_input_file setting ftol to 1e-10
+2023-02-07 02:39:07,323 - INFO : make_input_file setting etol to 0
+2023-02-07 02:39:07,323 - INFO : make_input_file setting ftol to 1e-10
+2023-02-07 02:39:07,324 - INFO : make_input_file setting etol to 0
+2023-02-07 02:39:07,324 - INFO : make_input_file setting ftol to 1e-10
+2023-02-07 02:39:07,325 - INFO : make_input_file setting etol to 0
+2023-02-07 02:39:07,325 - INFO : make_input_file setting ftol to 1e-10
+2023-02-07 02:39:07,326 - INFO : make_input_file setting etol to 0
+2023-02-07 02:39:07,326 - INFO : make_input_file setting ftol to 1e-10
+2023-02-07 02:39:07,327 - INFO : make_input_file setting etol to 0
+2023-02-07 02:39:07,327 - INFO : make_input_file setting ftol to 1e-10
+2023-02-07 02:39:07,328 - INFO : make_input_file setting etol to 0
+2023-02-07 02:39:07,328 - INFO : make_input_file setting ftol to 1e-10
+2023-02-07 02:39:07,329 - INFO : make_input_file setting etol to 0
+2023-02-07 02:39:07,330 - INFO : make_input_file setting ftol to 1e-10
+2023-02-07 02:39:07,331 - INFO : make_input_file setting etol to 0
+2023-02-07 02:39:07,331 - INFO : make_input_file setting ftol to 1e-10
+2023-02-07 02:39:07,332 - INFO : make_input_file setting etol to 0
+2023-02-07 02:39:07,332 - INFO : make_input_file setting ftol to 1e-10
+2023-02-07 02:39:07,333 - INFO : make_input_file setting etol to 0
+2023-02-07 02:39:07,333 - INFO : make_input_file setting ftol to 1e-10
+2023-02-07 02:39:07,334 - INFO : make_input_file setting etol to 0
+2023-02-07 02:39:07,334 - INFO : make_input_file setting ftol to 1e-10
+2023-02-07 02:39:07,335 - INFO : make_input_file setting etol to 0
+2023-02-07 02:39:07,335 - INFO : make_input_file setting ftol to 1e-10
+2023-02-07 02:39:07,336 - INFO : make_input_file setting etol to 0
+2023-02-07 02:39:07,336 - INFO : make_input_file setting ftol to 1e-10
+2023-02-07 02:39:07,337 - INFO : make_input_file setting etol to 0
+2023-02-07 02:39:07,338 - INFO : make_input_file setting ftol to 1e-10
+2023-02-07 02:39:07,339 - INFO : make_input_file setting etol to 0
+2023-02-07 02:39:07,339 - INFO : make_input_file setting ftol to 1e-10
+2023-02-07 02:39:07,405 - INFO : make_input_file setting etol to 0
+2023-02-07 02:39:07,405 - INFO : make_input_file setting ftol to 1e-10
+2023-02-07 02:39:07,406 - INFO : make_input_file setting etol to 0
+2023-02-07 02:39:07,406 - INFO : make_input_file setting ftol to 1e-10
+2023-02-07 02:39:07,407 - INFO : make_input_file setting etol to 0
+2023-02-07 02:39:07,407 - INFO : make_input_file setting ftol to 1e-10
+2023-02-07 02:39:07,408 - INFO : make_input_file setting etol to 0
+2023-02-07 02:39:07,408 - INFO : make_input_file setting ftol to 1e-10
+2023-02-07 02:39:07,409 - WARNING : /tmp/inputs/artifacts/input/Users/zhuoyuan/Documents/PycharmProjects/dflow-props/scripts/confs/std-fcc/eos_00 already exists
+2023-02-07 02:39:07,409 - INFO : treat vol_start and vol_end as relative volume
+2023-02-07 02:39:07,412 - INFO : make_input_file setting etol to 0
+2023-02-07 02:39:07,412 - INFO : make_input_file setting ftol to 1e-10
+2023-02-07 02:39:07,413 - INFO : make_input_file setting etol to 0
+2023-02-07 02:39:07,413 - INFO : make_input_file setting ftol to 1e-10
+2023-02-07 02:39:07,414 - INFO : make_input_file setting etol to 0
+2023-02-07 02:39:07,414 - INFO : make_input_file setting ftol to 1e-10
+2023-02-07 02:39:07,415 - INFO : make_input_file setting etol to 0
+2023-02-07 02:39:07,415 - INFO : make_input_file setting ftol to 1e-10
+2023-02-07 02:39:07,415 - WARNING : /tmp/inputs/artifacts/input/Users/zhuoyuan/Documents/PycharmProjects/dflow-props/scripts/confs/std-fcc/elastic_00 already exists
+2023-02-07 02:39:07,438 - INFO : make_input_file setting etol to 0
+2023-02-07 02:39:07,438 - INFO : make_input_file setting ftol to 1e-10
+2023-02-07 02:39:07,439 - INFO : make_input_file setting etol to 0
+2023-02-07 02:39:07,439 - INFO : make_input_file setting ftol to 1e-10
+2023-02-07 02:39:07,440 - INFO : make_input_file setting etol to 0
+2023-02-07 02:39:07,440 - INFO : make_input_file setting ftol to 1e-10
+2023-02-07 02:39:07,441 - INFO : make_input_file setting etol to 0
+2023-02-07 02:39:07,441 - INFO : make_input_file setting ftol to 1e-10
+2023-02-07 02:39:07,442 - INFO : make_input_file setting etol to 0
+2023-02-07 02:39:07,442 - INFO : make_input_file setting ftol to 1e-10
+2023-02-07 02:39:07,443 - INFO : make_input_file setting etol to 0
+2023-02-07 02:39:07,443 - INFO : make_input_file setting ftol to 1e-10
+2023-02-07 02:39:07,505 - INFO : make_input_file setting etol to 0
+2023-02-07 02:39:07,505 - INFO : make_input_file setting ftol to 1e-10
+2023-02-07 02:39:07,506 - INFO : make_input_file setting etol to 0
+2023-02-07 02:39:07,506 - INFO : make_input_file setting ftol to 1e-10
+2023-02-07 02:39:07,507 - INFO : make_input_file setting etol to 0
+2023-02-07 02:39:07,507 - INFO : make_input_file setting ftol to 1e-10
+2023-02-07 02:39:07,508 - INFO : make_input_file setting etol to 0
+2023-02-07 02:39:07,508 - INFO : make_input_file setting ftol to 1e-10
+2023-02-07 02:39:07,509 - INFO : make_input_file setting etol to 0
+2023-02-07 02:39:07,509 - INFO : make_input_file setting ftol to 1e-10
+2023-02-07 02:39:07,510 - INFO : make_input_file setting etol to 0
+2023-02-07 02:39:07,510 - INFO : make_input_file setting ftol to 1e-10
+2023-02-07 02:39:07,511 - INFO : make_input_file setting etol to 0
+2023-02-07 02:39:07,512 - INFO : make_input_file setting ftol to 1e-10
+2023-02-07 02:39:07,513 - INFO : make_input_file setting etol to 0
+2023-02-07 02:39:07,513 - INFO : make_input_file setting ftol to 1e-10
+2023-02-07 02:39:07,514 - INFO : make_input_file setting etol to 0
+2023-02-07 02:39:07,514 - INFO : make_input_file setting ftol to 1e-10
+2023-02-07 02:39:07,515 - INFO : make_input_file setting etol to 0
+2023-02-07 02:39:07,515 - INFO : make_input_file setting ftol to 1e-10
+2023-02-07 02:39:07,516 - INFO : make_input_file setting etol to 0
+2023-02-07 02:39:07,516 - INFO : make_input_file setting ftol to 1e-10
+2023-02-07 02:39:07,517 - INFO : make_input_file setting etol to 0
+2023-02-07 02:39:07,517 - INFO : make_input_file setting ftol to 1e-10
+2023-02-07 02:39:07,518 - INFO : make_input_file setting etol to 0
+2023-02-07 02:39:07,518 - INFO : make_input_file setting ftol to 1e-10
+2023-02-07 02:39:07,519 - INFO : make_input_file setting etol to 0
+2023-02-07 02:39:07,519 - INFO : make_input_file setting ftol to 1e-10
+2023-02-07 02:39:07,520 - INFO : make_input_file setting etol to 0
+2023-02-07 02:39:07,520 - INFO : make_input_file setting ftol to 1e-10
+2023-02-07 02:39:07,521 - INFO : make_input_file setting etol to 0
+2023-02-07 02:39:07,521 - INFO : make_input_file setting ftol to 1e-10
+2023-02-07 02:39:07,523 - INFO : make_input_file setting etol to 0
+2023-02-07 02:39:07,523 - INFO : make_input_file setting ftol to 1e-10
+2023-02-07 02:39:07,524 - INFO : make_input_file setting etol to 0
+2023-02-07 02:39:07,524 - INFO : make_input_file setting ftol to 1e-10
+2023-02-07 02:39:07,524 - INFO : finished!
+2023-02-07 02:42:18,970 - INFO : start auto-testing
