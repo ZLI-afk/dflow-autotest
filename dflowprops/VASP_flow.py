@@ -82,14 +82,14 @@ def main_vasp():
 
     cwd = os.getcwd()
     work_dir = cwd
-    wf = Workflow(name="relax")
+    wf = Workflow(name="props")
 
-    Propsmake = Step(
+    propsmake = Step(
         name="Propsmake",
         template=PythonOPTemplate(PropsMakeVASP, image=dpgen_image_name, command=["python3"]),
         artifacts={"input": upload_artifact(work_dir)},
     )
-    wf.add(Propsmake)
+    wf.add(propsmake)
 
     vasp = PythonOPTemplate(VASP,
                             slices=Slices("{{item}}", input_artifact=["input_vasp"], output_artifact=["output_vasp"]),
@@ -97,21 +97,21 @@ def main_vasp():
     vasp_cal = Step(
         name="VASP-Cal",
         template=vasp,
-        artifacts={"input_vasp": Propsmake.outputs.artifacts["jobs"]},
+        artifacts={"input_vasp": propsmake.outputs.artifacts["jobs"]},
         parameters={"run_command": vasp_run_command},
-        with_param=argo_range(Propsmake.outputs.parameters["njobs"]),
+        with_param=argo_range(propsmake.outputs.parameters["njobs"]),
         key="VASP-Cal-{{item}}",
         executor=dispatcher_executor_cpu
     )
     wf.add(vasp_cal)
 
-    Propspost = Step(
+    propspost = Step(
         name="Propspost",
         template=PythonOPTemplate(PropsPostVASP, image=dpgen_image_name, command=["python3"]),
         artifacts={"input_post": vasp_cal.outputs.artifacts["output_vasp"], "input_all": Propsmake.outputs.artifacts["output"]},
         parameters={"path": cwd}
     )
-    wf.add(Propspost)
+    wf.add(propspost)
 
     wf.submit()
 
