@@ -84,12 +84,12 @@ def main_lammps():
     work_dir = cwd
     wf = Workflow(name="Props")
 
-    relaxmake = Step(
+    propsmake = Step(
         name="Propsmake",
         template=PythonOPTemplate(PropsMakeLAMMPS, image=dpgen_image_name, command=["python3"]),
         artifacts={"input": upload_artifact(work_dir)},
     )
-    wf.add(relaxmake)
+    wf.add(propsmake)
 
     lammps = PythonOPTemplate(LAMMPS,
                               slices=Slices("{{item}}", input_artifact=["input_lammps"],
@@ -98,21 +98,21 @@ def main_lammps():
     lammps_cal = Step(
         name="LAMMPS-Cal",
         template=lammps,
-        artifacts={"input_lammps": relaxmake.outputs.artifacts["jobs"]},
-        with_param=argo_range(relaxmake.outputs.parameters["njobs"]),
+        artifacts={"input_lammps": propsmake.outputs.artifacts["jobs"]},
+        with_param=argo_range(propsmake.outputs.parameters["njobs"]),
         key="LAMMPS-Cal-{{item}}",
         executor=dispatcher_executor_gpu
     )
     wf.add(lammps_cal)
 
-    relaxpost = Step(
+    propspost = Step(
         name="Propspost",
         template=PythonOPTemplate(PropsPostLAMMPS, image=dpgen_image_name, command=["python3"]),
         artifacts={"input_post": lammps_cal.outputs.artifacts["output_lammps"],
-                   "input_all": relaxmake.outputs.artifacts["output"]},
+                   "input_all": propsmake.outputs.artifacts["output"]},
         parameters={"path": cwd}
     )
-    wf.add(relaxpost)
+    wf.add(propspost)
 
     wf.submit()
 
