@@ -1,0 +1,2 @@
+[console_scripts]
+dflowprops = dflowprops.__main__:main
