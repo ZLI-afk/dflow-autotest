@@ -1,6 +1,0 @@
-pydflow>=1.6.27
-lbg>=1.2.13
-dpdata>=0.2.13
-matplotlib
-dpgen
-seekpath
