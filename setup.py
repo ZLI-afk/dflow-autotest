@@ -27,6 +27,8 @@ setuptools.setup(
         "Operating System :: OS Independent",
     ],
     python_requires='>=3.8',
-    provides=["dflowprops"],
-    script=["scripts/__main__"]
+    script=[],
+    entry_points={'console_scripts': [
+         'dflowprops = scripts.dflowprops_main:main',
+     ]}
 )
