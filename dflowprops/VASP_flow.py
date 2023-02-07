@@ -32,8 +32,8 @@ from dflow.python import upload_packages
 upload_packages.append(__file__)
 
 
-def main_lammps():
-    from .LAMMPS_OPs import PropsMakeLAMMPS, LAMMPS, PropsPostLAMMPS
+def main_vasp():
+    from .VASP_OPs import PropsMakeVASP, VASP, PropsPostVASP
     global_param = loadfn("global.json")
     work_dir = global_param.get("work_dir", None)
     email = global_param.get("email", None)
@@ -41,10 +41,10 @@ def main_lammps():
     program_id = global_param.get("program_id", None)
     dpgen_image_name = global_param.get("dpgen_image_name", None)
     vasp_image_name = global_param.get("vasp_image_name", None)
-    dpmd_image_name = global_param.get("dpmd_image_name", None)
     abacus_image_name = global_param.get("abacus_image_name", None)
     cpu_scass_type = global_param.get("cpu_scass_type", None)
     gpu_scass_type = global_param.get("gpu_scass_type", None)
+    vasp_run_command = global_param.get("vasp_run_command", None)
 
     dispatcher_executor_cpu = DispatcherExecutor(
         machine_dict={
@@ -86,30 +86,29 @@ def main_lammps():
 
     relaxmake = Step(
         name="Relaxmake",
-        template=PythonOPTemplate(PropsMakeLAMMPS, image=dpgen_image_name, command=["python3"]),
+        template=PythonOPTemplate(PropsMakeVASP, image=dpgen_image_name, command=["python3"]),
         artifacts={"input": upload_artifact(work_dir)},
     )
     wf.add(relaxmake)
 
-    lammps = PythonOPTemplate(LAMMPS,
-                              slices=Slices("{{item}}", input_artifact=["input_lammps"],
-                                            output_artifact=["output_lammps"]),
-                              image=dpmd_image_name, command=["python3"])
-    lammps_cal = Step(
-        name="LAMMPS-Cal",
-        template=lammps,
-        artifacts={"input_lammps": relaxmake.outputs.artifacts["jobs"]},
+    vasp = PythonOPTemplate(VASP,
+                            slices=Slices("{{item}}", input_artifact=["input_vasp"], output_artifact=["output_vasp"]),
+                            image=vasp_image_name, command=["python3"])
+    vasp_cal = Step(
+        name="VASP-Cal",
+        template=vasp,
+        artifacts={"input_vasp": relaxmake.outputs.artifacts["jobs"]},
+        parameters={"run_command": vasp_run_command},
         with_param=argo_range(relaxmake.outputs.parameters["njobs"]),
-        key="LAMMPS-Cal-{{item}}",
-        executor=dispatcher_executor_gpu
+        key="VASP-Cal-{{item}}",
+        executor=dispatcher_executor_cpu
     )
-    wf.add(lammps_cal)
+    wf.add(vasp_cal)
 
     relaxpost = Step(
         name="Relaxpost",
-        template=PythonOPTemplate(PropsPostLAMMPS, image=dpgen_image_name, command=["python3"]),
-        artifacts={"input_post": lammps_cal.outputs.artifacts["output_lammps"],
-                   "input_all": relaxmake.outputs.artifacts["output"]},
+        template=PythonOPTemplate(PropsPostVASP, image=dpgen_image_name, command=["python3"]),
+        artifacts={"input_post": vasp_cal.outputs.artifacts["output_vasp"], "input_all": relaxmake.outputs.artifacts["output"]},
         parameters={"path": cwd}
     )
     wf.add(relaxpost)

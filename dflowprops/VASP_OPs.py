@@ -27,13 +27,16 @@ from typing import List
 from dflow.plugins.bohrium import BohriumContext, BohriumExecutor
 from dpdata.periodic_table import Element
 from monty.serialization import loadfn
+
+
 from dflow.python import upload_packages
+
 import shutil
 upload_packages.append(__file__)
 
 from lib.utils import return_prop_list
 
-class PropsMakeLAMMPS(OP):
+class PropsMakeVASP(OP):
     """
     class for making calculation tasks
     """
@@ -80,18 +83,15 @@ class PropsMakeLAMMPS(OP):
         task_list = []
         for ii in conf_dirs:
             conf_dir_global = os.path.join(work_d, ii)
-            for jj in prop_list:
-                task_list.append(os.path.join(conf_dir_global, jj))
-            """
+            #for jj in prop_list:
+            #    task_list.append(os.path.join(conf_dir_global, jj))
             for jj in prop_list:
                 prop = os.path.join(conf_dir_global, jj)
                 os.chdir(prop)
                 prop_tasks = glob.glob(os.path.join(prop, 'task.*'))
                 prop_tasks.sort()
                 for kk in prop_tasks:
-                    #bbb = kk
                     task_list.append(kk)
-            """
 
         all_jobs = task_list
         njobs = len(all_jobs)
@@ -108,9 +108,9 @@ class PropsMakeLAMMPS(OP):
         return op_out
 
 
-class LAMMPS(OP):
+class VASP(OP):
     """
-    class for LAMMPS calculation
+    class for VASP calculation
     """
 
     def __init__(self, infomode=1):
@@ -119,29 +119,30 @@ class LAMMPS(OP):
     @classmethod
     def get_input_sign(cls):
         return OPIOSign({
-            'input_lammps': Artifact(Path)
+            'input_vasp': Artifact(Path),
+            'run_command': str
         })
 
     @classmethod
     def get_output_sign(cls):
         return OPIOSign({
-            'output_lammps': Artifact(Path, sub_path=False)
+            'output_vasp': Artifact(Path, sub_path=False)
         })
 
     @OP.exec_sign_check
     def execute(self, op_in: OPIO) -> OPIO:
         cwd = os.getcwd()
-        os.chdir(op_in["input_lammps"])
-        cmd = "for ii in task.*; do cd $ii; lmp -in in.lammps; cd ..; done"
+        os.chdir(op_in["input_vasp"])
+        cmd = op_in["run_command"]
         subprocess.call(cmd, shell=True)
         os.chdir(cwd)
         op_out = OPIO({
-            "output_lammps": op_in["input_lammps"]
+            "output_vasp": op_in["input_vasp"]
         })
         return op_out
 
 
-class PropsPostLAMMPS(OP):
+class PropsPostVASP(OP):
     """
     class for analyzing calculation results
     """
@@ -166,7 +167,7 @@ class PropsPostLAMMPS(OP):
     @OP.exec_sign_check
     def execute(self, op_in: OPIO) -> OPIO:
         os.chdir(str(op_in['input_all'])+op_in['path'])
-        shutil.copytree(str(op_in['input_post']) + op_in['path'], '../scripts/', dirs_exist_ok=True)
+        shutil.copytree(str(op_in['input_post'])+op_in['path'], './', dirs_exist_ok=True)
 
         param_argv = 'param_prop.json'
         cmd = f'dpgen autotest post {param_argv}'
