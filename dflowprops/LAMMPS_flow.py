@@ -82,10 +82,10 @@ def main_lammps():
 
     cwd = os.getcwd()
     work_dir = cwd
-    wf = Workflow(name="relax")
+    wf = Workflow(name="Props")
 
     relaxmake = Step(
-        name="Relaxmake",
+        name="Propsmake",
         template=PythonOPTemplate(PropsMakeLAMMPS, image=dpgen_image_name, command=["python3"]),
         artifacts={"input": upload_artifact(work_dir)},
     )
@@ -106,7 +106,7 @@ def main_lammps():
     wf.add(lammps_cal)
 
     relaxpost = Step(
-        name="Relaxpost",
+        name="Propspost",
         template=PythonOPTemplate(PropsPostLAMMPS, image=dpgen_image_name, command=["python3"]),
         artifacts={"input_post": lammps_cal.outputs.artifacts["output_lammps"],
                    "input_all": relaxmake.outputs.artifacts["output"]},
@@ -119,5 +119,5 @@ def main_lammps():
     while wf.query_status() in ["Pending", "Running"]:
         time.sleep(4)
     assert (wf.query_status() == 'Succeeded')
-    step = wf.query_step(name="Relaxpost")[0]
+    step = wf.query_step(name="Propspost")[0]
     download_artifact(step.outputs.artifacts["output_all"])
