@@ -19,13 +19,13 @@ s3_config["storage_client"] = TiefblueClient()
 
 import argparse
 import sys
-sys.path.append("..")
-sys.path.append("../dflowprops")
+#sys.path.append("..")
+#sys.path.append("../dflowprops")
 
 #from dflowrelax.VASP_flow import main_vasp
 #from dflowrelax.ABACUS_flow import main_abacus
 #from dflowprops.LAMMPS_flow import main_lammps
-from dflowprops.LAMMPS_flow import main_lammps
+from .LAMMPS_flow import main_lammps
 
 def main():
     parser = argparse.ArgumentParser()
