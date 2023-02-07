@@ -35,7 +35,7 @@
         },
 	{
          "type":         "interstitial",
-         "skip":         false,
+         "skip":         true,
          "supercell":   [1, 1, 1],
          "insert_ele":  ["Mo"],
          "bcc_self":    true
