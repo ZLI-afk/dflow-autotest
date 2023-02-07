@@ -27,6 +27,7 @@ import sys
 #from dflowprops.LAMMPS_flow import main_lammps
 from .LAMMPS_flow import main_lammps
 from .VASP_flow import main_vasp
+from .ABACUS_flow import main_abacus
 
 def main():
     parser = argparse.ArgumentParser()
@@ -41,7 +42,7 @@ def main():
     if args.vasp:
         main_vasp()
     elif args.abacus:
-        pass
+        main_abacus()
     elif args.lammps:
         main_lammps()
 
