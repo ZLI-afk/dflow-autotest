@@ -34,7 +34,7 @@ from dflow.python import upload_packages
 import shutil
 upload_packages.append(__file__)
 
-from lib.utils import return_prop_list
+from .lib.utils import return_prop_list
 
 class PropsMakeVASP(OP):
     """
