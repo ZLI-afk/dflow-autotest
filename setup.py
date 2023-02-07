@@ -11,7 +11,7 @@ setuptools.setup(
     description="A properties test package based on dflow",
     long_description=long_description,
     long_description_content_type="text/markdown",
-    url="",
+    url="https://github.com/ZLI-afk/dflow-props.git",
     packages=setuptools.find_packages(),
     install_requires=[
         "pydflow>=1.6.27",
