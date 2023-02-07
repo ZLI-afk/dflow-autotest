@@ -34,7 +34,7 @@ from dflow.python import upload_packages
 import shutil
 upload_packages.append(__file__)
 
-from .lib.utils import return_prop_list
+#from .lib.utils import return_prop_list
 
 class PropsMakeVASP(OP):
     """
@@ -79,6 +79,7 @@ class PropsMakeVASP(OP):
             conf_dirs.extend(glob.glob(conf))
         conf_dirs.sort()
 
+        from .lib.utils import return_prop_list
         prop_list = return_prop_list(parameter)
         task_list = []
         for ii in conf_dirs:
