@@ -28,10 +28,4 @@ setuptools.setup(
     ],
     python_requires='>=3.8',
     provides=["dflowprops"],
-    script=[],
-    entry_point = {
-        'console_scripts': [
-            'dflowprops = scripts.__main__:main'
-        ]
-    }
-)
+    script=["scripts/__main__"]
