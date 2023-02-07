@@ -108,7 +108,7 @@ def main_vasp():
     propspost = Step(
         name="Propspost",
         template=PythonOPTemplate(PropsPostVASP, image=dpgen_image_name, command=["python3"]),
-        artifacts={"input_post": vasp_cal.outputs.artifacts["output_vasp"], "input_all": Propsmake.outputs.artifacts["output"]},
+        artifacts={"input_post": vasp_cal.outputs.artifacts["output_vasp"], "input_all": propsmake.outputs.artifacts["output"]},
         parameters={"path": cwd}
     )
     wf.add(propspost)
