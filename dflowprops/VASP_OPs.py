@@ -33,8 +33,9 @@ from dflow.python import upload_packages
 
 import shutil
 upload_packages.append(__file__)
+upload_packages.append(os.path.join(__file__, 'lib'))
 
-from dflowprops.lib.utils import return_prop_list
+from .lib.utils import return_prop_list
 
 class PropsMakeVASP(OP):
     """
