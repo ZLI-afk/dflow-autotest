@@ -5,6 +5,7 @@
     "dpgen_image_name":"registry.dp.tech/dptech/dpgen:0.11.0",
     "dpmd_image_name": "registry.dp.tech/dptech/deepmd-kit:2.1.5-cuda11.6",
     "vasp_image_name":"registry.dp.tech/dptech/vasp:5.4.4-dflow",
+    "vasp_run_command":"bash -c \"source /opt/intel/oneapi/setvars.sh && ulimit -s unlimited && mpirun -n 32 /opt/vasp.5.4.4/bin/vasp_std \"",
     "abacus_image_name":"registry.dp.tech/dptech/prod-11461/abacus:phonopy",
     "cpu_scass_type":"c16_m64_cpu",
     "gpu_scass_type":"c8_m32_1 * NVIDIA V100"

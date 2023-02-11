@@ -167,7 +167,7 @@ class PropsPostLAMMPS(OP):
     @OP.exec_sign_check
     def execute(self, op_in: OPIO) -> OPIO:
         os.chdir(str(op_in['input_all'])+op_in['path'])
-        shutil.copytree(str(op_in['input_post']) + op_in['path'], '../scripts/', dirs_exist_ok=True)
+        shutil.copytree(str(op_in['input_post']) + op_in['path'], './', dirs_exist_ok=True)
 
         param_argv = 'param_prop.json'
         cmd = f'dpgen autotest post {param_argv}'
