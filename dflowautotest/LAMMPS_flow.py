@@ -115,7 +115,7 @@ class FlowGenerator():
             else:
                 raise (RuntimeError('same type of input json files'))
         else:
-            raise (ValueError('only two input args are allowed'))
+            raise (ValueError('maximum allowed two input arguments'))
 
     def init_steps(self):
         cwd = os.getcwd()
