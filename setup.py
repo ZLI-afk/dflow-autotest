@@ -4,7 +4,7 @@ with open("README.md", "r") as fh:
     long_description = fh.read()
 
 setuptools.setup(
-    name="dflow-props",
+    name="dflow-autotest",
     version="0.0.1",
     author="Zhuoyuan Li",
     author_email="zhuoyli@outlook.com",

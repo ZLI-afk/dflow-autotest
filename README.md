@@ -23,7 +23,7 @@ dflowprops --abacus
 
 If you want to use LAMMPS to do MD calculation, like the folder `dp_demo`. You need to prepare `POSCAR`, `frozen_model.pb`, `global.json` and `param_prop.json`, then:
 ```
-dflowprops --lammps
+dflowprops param_relax.json param_props.json --lammps
 ```
 
 You can monitor the workflow process on the [website](https://workflows.deepmodeling.com).
