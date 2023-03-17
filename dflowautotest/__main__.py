@@ -21,11 +21,11 @@ import argparse
 import sys
 #sys.path.append("..")
 #sys.path.append("../dflowautotest")
-sys.path.append(".")
+#sys.path.append(".")
 #from dflowrelax.VASP_flow import main_vasp
 #from dflowrelax.ABACUS_flow import main_abacus
 #from dflowautotest.LAMMPS_flow import main_lammps
-from LAMMPS_flow import main_lammps
+from .LAMMPS_flow import main_lammps
 #from .VASP_flow import main_vasp
 #from .ABACUS_flow import main_abacus
 
