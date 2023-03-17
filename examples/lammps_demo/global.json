@@ -1,6 +1,6 @@
 {
-    "email": "*****",
-    "password": "****",
+    "email": "*********",
+    "password": "******",
     "program_id": 11331,
     "dpgen_image_name":"registry.dp.tech/dptech/dpgen:0.11.0",
     "dpmd_image_name": "deepmodeling/deepmd-kit:2.1.1_cuda11.6_gpu",
