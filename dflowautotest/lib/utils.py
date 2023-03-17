@@ -29,6 +29,6 @@ def determine_task(file: str) -> str:
     elif 'properties' in jdata:
         task_type = 'props'
     else:
-        raise(RuntimeError('can not recognize input json file'))
+        raise RuntimeError('can not recognize input json file')
 
     return task_type

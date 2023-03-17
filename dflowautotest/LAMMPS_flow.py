@@ -113,9 +113,9 @@ class FlowGenerator():
                     self.relax_param = args.files[1]
                     self.props_param = args.files[0]
             else:
-                raise (RuntimeError('Same type of input json files'))
+                raise RuntimeError('Same type of input json files')
         else:
-            raise (ValueError('A maximum of two input arguments is allowed'))
+            raise ValueError('A maximum of two input arguments is allowed')
 
     def init_steps(self):
         cwd = os.getcwd()
