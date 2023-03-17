@@ -29,6 +29,6 @@ setuptools.setup(
     python_requires='>=3.8',
     script=[],
     entry_points={'console_scripts': [
-         'dflowprops = dflowprops.__main__:main',
+         'dflowautotest = dflowautotest.__main__:main',
      ]}
 )

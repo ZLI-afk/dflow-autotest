@@ -1,10 +1,11 @@
 #!/usr/bin/env python3
 
+from monty.serialization import loadfn
 from dflow.python import upload_packages
 upload_packages.append(__file__)
 
 
-def return_prop_list(parameters):
+def return_prop_list(parameters: list) -> list:
     prop_list = []
     for ii in parameters:
         if ii.get('skip', False):
@@ -20,3 +21,14 @@ def return_prop_list(parameters):
             suffix = '00'
         prop_list.append(ii['type'] + '_' + suffix)
     return prop_list
+
+def determine_task(file: str) -> str:
+    jdata = loadfn(file)
+    if 'relaxation' in jdata:
+        task_type = 'relax'
+    elif 'properties' in jdata:
+        task_type = 'props'
+    else:
+        raise(RuntimeError('can not recognize input json file'))
+
+    return task_type

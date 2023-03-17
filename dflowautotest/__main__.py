@@ -20,31 +20,39 @@ s3_config["storage_client"] = TiefblueClient()
 import argparse
 import sys
 #sys.path.append("..")
-#sys.path.append("../dflowprops")
+#sys.path.append("../dflowautotest")
 
 #from dflowrelax.VASP_flow import main_vasp
 #from dflowrelax.ABACUS_flow import main_abacus
-#from dflowprops.LAMMPS_flow import main_lammps
+#from dflowautotest.LAMMPS_flow import main_lammps
 from .LAMMPS_flow import main_lammps
 from .VASP_flow import main_vasp
 from .ABACUS_flow import main_abacus
 
-def main():
+def parse_args():
     parser = argparse.ArgumentParser()
-    parser.add_argument("--vasp", help="Using VASP to perform relaxation",
+    parser.add_argument('files', type=str, nargs='+',
+                        help='Input indicating json files')
+    parser.add_argument("--vasp", help="Using VASP to perform autotest",
                         action="store_true")
-    parser.add_argument("--abacus", help="Using ABACUS to perform relaxation",
+    parser.add_argument("--abacus", help="Using ABACUS to perform autotest",
                         action="store_true")
-    parser.add_argument("--lammps", help="Using LAMMPS to perform relaxation",
+    parser.add_argument("--lammps", help="Using LAMMPS to perform autotest",
+                        action="store_true")
+    parser.add_argument("--relax", help="Run relaxation before test properties",
                         action="store_true")
     args = parser.parse_args()
+    return args
+
+def main():
+    args = parse_args()
 
     if args.vasp:
-        main_vasp()
+        main_vasp(args)
     elif args.abacus:
-        main_abacus()
+        main_abacus(args)
     elif args.lammps:
-        main_lammps()
+        main_lammps(args)
 
 if __name__ == '__main__':
     main()
