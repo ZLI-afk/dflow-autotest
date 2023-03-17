@@ -28,7 +28,7 @@ from dflow.plugins.dispatcher import DispatcherExecutor
 from monty.serialization import loadfn
 from monty.serialization import loadfn
 from dflow.python import upload_packages
-from .LAMMPS_OPs import (
+from LAMMPS_OPs import (
     RelaxMakeLAMMPS,
     RelaxLAMMPS,
     RelaxPostLAMMPS,
@@ -36,12 +36,13 @@ from .LAMMPS_OPs import (
     PropsLAMMPS,
     PropsPostLAMMPS
 )
-from .lib.utils import determine_task
+from lib.utils import determine_task
 
 upload_packages.append(__file__)
 
-class FlowGenerator(object):
-    def __int__(self, args):
+
+class FlowGenerator():
+    def __init__(self, args):
         # initiate params defined in global.json
         global_param = loadfn("global.json")
         self.global_param = global_param
@@ -195,7 +196,7 @@ class FlowGenerator(object):
         self.propspost = propspost
 
     def make_relax_flow(self):
-        wf = Workflow(name='Relaxation')
+        wf = Workflow(name='relaxation')
         wf.add(self.relaxmake)
         wf.add(self.relaxlammps_cal)
         wf.add(self.relaxpost)
@@ -208,7 +209,7 @@ class FlowGenerator(object):
         download_artifact(step.outputs.artifacts["output_confs"])
 
     def make_prop_flow(self):
-        wf = Workflow(name='Properties')
+        wf = Workflow(name='properties')
         wf.add(self.propsmake)
         wf.add(self.propslammps_cal)
         wf.add(self.propspost)
@@ -221,7 +222,7 @@ class FlowGenerator(object):
         download_artifact(step.outputs.artifacts["output_confs"])
 
     def make_relax_prop_flow(self):
-        wf = Workflow(name='Relaxation&Properties')
+        wf = Workflow(name='relax-props')
         wf.add(self.relaxmake)
         wf.add(self.relaxlammps_cal)
         wf.add(self.relaxpost)

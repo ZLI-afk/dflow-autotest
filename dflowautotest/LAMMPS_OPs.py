@@ -31,7 +31,7 @@ from dflow.python import upload_packages
 import shutil
 upload_packages.append(__file__)
 
-from .lib.utils import return_prop_list
+from lib.utils import return_prop_list
 
 
 class RelaxMakeLAMMPS(OP):
@@ -68,8 +68,6 @@ class RelaxMakeLAMMPS(OP):
         work_d = os.getcwd()
         param_argv = op_in["param"]
         structures = loadfn(param_argv)["structures"]
-        inter_parameter = loadfn(param_argv)["interaction"]
-        parameter = loadfn(param_argv)["properties"]
         cmd = f'dpgen autotest make {param_argv}'
         subprocess.call(cmd, shell=True)
 
@@ -209,7 +207,7 @@ class PropsMakeLAMMPS(OP):
 
         os.chdir(op_in["input"])
         work_d = os.getcwd()
-        param_argv = 'param_prop.json'
+        param_argv = op_in["param"]
         structures = loadfn(param_argv)["structures"]
         inter_parameter = loadfn(param_argv)["interaction"]
         parameter = loadfn(param_argv)["properties"]
@@ -300,13 +298,14 @@ class PropsPostLAMMPS(OP):
         return OPIOSign({
             'input_post': Artifact(Path, sub_path=False),
             'path': str,
-            'input_all': Artifact(Path, sub_path=False)
+            'input_all': Artifact(Path, sub_path=False),
+            'param': Artifact(Path)
         })
 
     @classmethod
     def get_output_sign(cls):
         return OPIOSign({
-            'output_all': Artifact(Path, sub_path=False)
+            'output_confs': Artifact(Path, sub_path=False)
         })
 
     @OP.exec_sign_check
@@ -315,7 +314,7 @@ class PropsPostLAMMPS(OP):
         os.chdir(str(op_in['input_all'])+op_in['path'])
         shutil.copytree(str(op_in['input_post']) + op_in['path'], './', dirs_exist_ok=True)
 
-        param_argv = 'param_prop.json'
+        param_argv = op_in["param"]
         cmd = f'dpgen autotest post {param_argv}'
         subprocess.call(cmd, shell=True)
 

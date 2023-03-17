@@ -21,13 +21,13 @@ import argparse
 import sys
 #sys.path.append("..")
 #sys.path.append("../dflowautotest")
-
+sys.path.append(".")
 #from dflowrelax.VASP_flow import main_vasp
 #from dflowrelax.ABACUS_flow import main_abacus
 #from dflowautotest.LAMMPS_flow import main_lammps
-from .LAMMPS_flow import main_lammps
-from .VASP_flow import main_vasp
-from .ABACUS_flow import main_abacus
+from LAMMPS_flow import main_lammps
+#from .VASP_flow import main_vasp
+#from .ABACUS_flow import main_abacus
 
 def parse_args():
     parser = argparse.ArgumentParser()
@@ -39,8 +39,7 @@ def parse_args():
                         action="store_true")
     parser.add_argument("--lammps", help="Using LAMMPS to perform autotest",
                         action="store_true")
-    parser.add_argument("--relax", help="Run relaxation before test properties",
-                        action="store_true")
+    #parser.add_argument("--relax", help="Run relaxation before test properties", action="store_true")
     args = parser.parse_args()
     return args
 
@@ -48,9 +47,11 @@ def main():
     args = parse_args()
 
     if args.vasp:
-        main_vasp(args)
+        pass
+        #main_vasp(args)
     elif args.abacus:
-        main_abacus(args)
+        pass
+        #main_abacus(args)
     elif args.lammps:
         main_lammps(args)
 
