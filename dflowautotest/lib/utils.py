@@ -30,5 +30,4 @@ def determine_task(file: str) -> str:
         task_type = 'props'
     else:
         raise RuntimeError('can not recognize input json file')
-
     return task_type
