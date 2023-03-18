@@ -166,6 +166,7 @@ class FlowGenerator(object):
             self.flow_type = 'relax'
         else:
             self.flow_type = 'props'
+
     def init_steps(self):
         cwd = os.getcwd()
         work_dir = cwd
