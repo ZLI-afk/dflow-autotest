@@ -109,7 +109,8 @@ class RelaxLAMMPS(OP):
     @classmethod
     def get_input_sign(cls):
         return OPIOSign({
-            'input_lammps': Artifact(Path)
+            'input_lammps': Artifact(Path),
+            'run_command': str
         })
 
     @classmethod
@@ -122,7 +123,7 @@ class RelaxLAMMPS(OP):
     def execute(self, op_in: OPIO) -> OPIO:
         cwd = os.getcwd()
         os.chdir(op_in["input_lammps"])
-        cmd = "lmp -in in.lammps"
+        cmd = op_in["run_command"]
         subprocess.call(cmd, shell=True)
         os.chdir(cwd)
         op_out = OPIO({
@@ -179,7 +180,6 @@ class PropsMakeLAMMPS(OP):
     """
     class for making calculation tasks
     """
-
     def __init__(self):
         pass
 
@@ -263,7 +263,8 @@ class PropsLAMMPS(OP):
     @classmethod
     def get_input_sign(cls):
         return OPIOSign({
-            'input_lammps': Artifact(Path)
+            'input_lammps': Artifact(Path),
+            'run_command': str
         })
 
     @classmethod

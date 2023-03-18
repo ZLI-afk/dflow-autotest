@@ -22,7 +22,8 @@ def return_prop_list(parameters: list) -> list:
         prop_list.append(ii['type'] + '_' + suffix)
     return prop_list
 
-def determine_task(file: str) -> str:
+
+def identify_task(file: str) -> str:
     jdata = loadfn(file)
     if 'relaxation' in jdata:
         task_type = 'relax'

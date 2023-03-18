@@ -5,7 +5,6 @@ from dflow.plugins import bohrium
 from dflow.plugins.bohrium import TiefblueClient
 from monty.serialization import loadfn
 
-
 config["host"] = "https://workflows.deepmodeling.com"
 config["k8s_api_server"] = "https://workflows.deepmodeling.com"
 username = loadfn("global.json").get("email",None)
@@ -18,16 +17,7 @@ s3_config["repo_key"] = "oss-bohrium"
 s3_config["storage_client"] = TiefblueClient()
 
 import argparse
-import sys
-#sys.path.append("..")
-#sys.path.append("../dflowautotest")
-#sys.path.append(".")
-#from dflowrelax.VASP_flow import main_vasp
-#from dflowrelax.ABACUS_flow import main_abacus
-#from dflowautotest.LAMMPS_flow import main_lammps
-from .LAMMPS_flow import main_lammps
-#from .VASP_flow import main_vasp
-#from .ABACUS_flow import main_abacus
+from .FlowGenerator import FlowGenerator
 
 def parse_args():
     parser = argparse.ArgumentParser()
@@ -45,15 +35,9 @@ def parse_args():
 
 def main():
     args = parse_args()
-
-    if args.vasp:
-        pass
-        #main_vasp(args)
-    elif args.abacus:
-        pass
-        #main_abacus(args)
-    elif args.lammps:
-        main_lammps(args)
+    flow = FlowGenerator(args)
+    flow.init_steps()
+    flow.generate_flow()
 
 if __name__ == '__main__':
     main()
