@@ -302,7 +302,7 @@ class PropsPostVASP(OP):
     @classmethod
     def get_output_sign(cls):
         return OPIOSign({
-            'output_all': Artifact(Path, sub_path=False)
+            'output_confs': Artifact(Path, sub_path=False)
         })
 
     @OP.exec_sign_check
