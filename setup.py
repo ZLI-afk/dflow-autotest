@@ -8,10 +8,10 @@ setuptools.setup(
     version="0.0.1",
     author="Zhuoyuan Li",
     author_email="zhuoyli@outlook.com",
-    description="A properties test package based on dflow",
+    description="DPGEN autotest package based on dflow",
     long_description=long_description,
     long_description_content_type="text/markdown",
-    url="https://github.com/ZLI-afk/dflow-props.git",
+    url="https://github.com/ZLI-afk/dflow-autotest.git",
     packages=setuptools.find_packages(),
     install_requires=[
         "pydflow>=1.6.27",
