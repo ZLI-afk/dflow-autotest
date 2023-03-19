@@ -95,6 +95,7 @@ class FlowGenerator(object):
                     },
                 },
             },
+            image_pull_policy="IfNotPresent"
         )
 
         dispatcher_executor_gpu = DispatcherExecutor(
@@ -112,6 +113,7 @@ class FlowGenerator(object):
                     },
                 },
             },
+            image_pull_policy="IfNotPresent"
         )
         # identify run mod
         if args.lammps:
