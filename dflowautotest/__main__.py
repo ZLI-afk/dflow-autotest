@@ -7,18 +7,20 @@ from monty.serialization import loadfn
 
 config["host"] = "https://workflows.deepmodeling.com"
 config["k8s_api_server"] = "https://workflows.deepmodeling.com"
-username = loadfn("global.json").get("email",None)
+username = loadfn("global.json").get("email", None)
 bohrium.config["username"] = username
-password = loadfn("global.json").get("password",None)
+password = loadfn("global.json").get("password", None)
 bohrium.config["password"] = password
-program_id = loadfn("global.json").get("program_id",None)
+program_id = loadfn("global.json").get("program_id", None)
 bohrium.config["program_id"] = program_id
 s3_config["repo_key"] = "oss-bohrium"
 s3_config["storage_client"] = TiefblueClient()
 
 import argparse
 from .FlowGenerator import FlowGenerator
-
+from .VASP_flow import VASPFlow
+from .LAMMPS_flow import LAMMPSFlow
+from .ABACUS_flow import ABACUSFlow
 def parse_args():
     parser = argparse.ArgumentParser()
     parser.add_argument('files', type=str, nargs='+',
@@ -35,7 +37,12 @@ def parse_args():
 
 def main():
     args = parse_args()
-    flow = FlowGenerator(args)
+    if args.abacus:
+        flow = ABACUSFlow(args)
+    elif args.lammps:
+        flow = LAMMPSFlow(args)
+    else:
+        flow = VASPFlow(args)
     flow.init_steps()
     flow.generate_flow()
 

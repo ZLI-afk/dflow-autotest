@@ -1,5 +1,3 @@
-import json, pathlib
-from typing import List
 from dflow import (
     Workflow,
     Step,
@@ -20,12 +18,8 @@ from dflow.python import (
     Slices,
     upload_packages
 )
-import time
-import subprocess, os, shutil, glob
-from pathlib import Path
-from typing import List
+import time, os
 from dflow.plugins.dispatcher import DispatcherExecutor
-from monty.serialization import loadfn
 from monty.serialization import loadfn
 from dflow.python import upload_packages
 from .LAMMPS_OPs import (
@@ -36,31 +30,14 @@ from .LAMMPS_OPs import (
     PropsLAMMPS,
     PropsPostLAMMPS
 )
-from .VASP_OPs import (
-    RelaxMakeVASP,
-    RelaxVASP,
-    RelaxPostVASP,
-    PropsMakeVASP,
-    PropsVASP,
-    PropsPostVASP
-)
-from .ABACUS_OPs import (
-    RelaxMakeABACUS,
-    RelaxABACUS,
-    RelaxPostABACUS,
-    PropsMakeABACUS,
-    PropsABACUS,
-    PropsPostABACUS
-)
+
 from .lib.utils import identify_task
 
 upload_packages.append(__file__)
 
-
-class FlowGenerator(object):
+class LAMMPSFlow(object):
     """
-    Generate autotest workflow and submit automatically,
-    respecting lammps, vasp, and abacus according to user input arguments.
+    Generate autotest workflow and automatically submit lammps jobs according to user input arguments.
     """
     def __init__(self, args):
         # initiate params defined in global.json
@@ -73,10 +50,12 @@ class FlowGenerator(object):
         self.dpgen_image_name = global_param.get("dpgen_image_name", None)
         vasp_image_name = global_param.get("vasp_image_name", None)
         dpmd_image_name = global_param.get("dpmd_image_name", None)
+        self.image_name = dpmd_image_name
         abacus_image_name = global_param.get("abacus_image_name", None)
         cpu_scass_type = global_param.get("cpu_scass_type", None)
         gpu_scass_type = global_param.get("gpu_scass_type", None)
         lammps_run_command = global_param.get("lammps_run_command", None)
+        self.run_command = lammps_run_command
         vasp_run_command = global_param.get("vasp_run_command", None)
         abacus_run_command = global_param.get("abacus_run_command", None)
 
@@ -113,25 +92,7 @@ class FlowGenerator(object):
                 },
             },
         )
-        # identify run mod
-        if args.lammps:
-            self.mod = 'lammps'
-            self.Mod = 'LAMMPS'
-            self.image_name = dpmd_image_name
-            self.dispatcher_executor = dispatcher_executor_gpu
-            self.run_command = lammps_run_command
-        elif args.vasp:
-            self.mod = 'vasp'
-            self.Mod = 'VASP'
-            self.image_name = vasp_image_name
-            self.dispatcher_executor = dispatcher_executor_cpu
-            self.run_command = vasp_run_command
-        elif args.abacus:
-            self.mod = 'abacus'
-            self.Mod = 'ABACUS'
-            self.image_name = abacus_image_name
-            self.dispatcher_executor = dispatcher_executor_cpu
-            self.run_command = vasp_run_command
+        self.dispatcher_executor = dispatcher_executor_gpu
 
         # identify type of flow and input parameter file
         num_args = len(args.files)
@@ -170,37 +131,35 @@ class FlowGenerator(object):
     def init_steps(self):
         cwd = os.getcwd()
         work_dir = cwd
-        gn = globals()
-        ln = locals()
 
         relaxmake = Step(
             name="Relaxmake",
-            template=PythonOPTemplate(gn[f'RelaxMake{self.Mod}'], image=self.dpgen_image_name, command=["python3"]),
+            template=PythonOPTemplate(RelaxMakeLAMMPS, image=self.dpgen_image_name, command=["python3"]),
             artifacts={"input": upload_artifact(work_dir),
                        "param": upload_artifact(self.relax_param)},
         )
         self.relaxmake = relaxmake
 
-        relax = PythonOPTemplate(gn[f'Relax{self.Mod}'],
-                                       slices=Slices("{{item}}", input_artifact=[f"input_{self.mod}"],
-                                                     output_artifact=[f"output_{self.mod}"]),
+        relax = PythonOPTemplate(RelaxLAMMPS,
+                                       slices=Slices("{{item}}", input_artifact=["input_lammps"],
+                                                     output_artifact=["output_lammps"]),
                                        image=self.image_name, command=["python3"])
 
-        relax_cal = Step(
-            name=f"Relax{self.Mod}-Cal",
+        relaxcal = Step(
+            name="RelaxLAMMPS-Cal",
             template=relax,
-            artifacts={f"input_{self.mod}": relaxmake.outputs.artifacts["jobs"]},
+            artifacts={"input_lammps": relaxmake.outputs.artifacts["task_paths"]},
             parameters={"run_command": self.run_command},
             with_param=argo_range(relaxmake.outputs.parameters["njobs"]),
-            key=f"{self.Mod}-Cal-{{item}}",
+            key="LAMMPS-Cal-{{item}}",
             executor=self.dispatcher_executor
         )
-        self.relax_cal = relax_cal
+        self.relaxcal = relaxcal
 
         relaxpost = Step(
             name="Relaxpost",
-            template=PythonOPTemplate(gn[f'RelaxPost{self.Mod}'], image=self.dpgen_image_name, command=["python3"]),
-            artifacts={"input_post": relax_cal.outputs.artifacts[f"output_{self.mod}"],
+            template=PythonOPTemplate(RelaxPostLAMMPS, image=self.dpgen_image_name, command=["python3"]),
+            artifacts={"input_post": relaxcal.outputs.artifacts["output_lammps"],
                        "input_all": relaxmake.outputs.artifacts["output"],
                        "param": upload_artifact(self.relax_param)},
             parameters={"path": cwd}
@@ -210,39 +169,38 @@ class FlowGenerator(object):
         if self.do_relax:
             propsmake = Step(
                 name="Propsmake",
-                template=PythonOPTemplate(gn[f'PropsMake{self.Mod}'], image=self.dpgen_image_name, command=["python3"]),
+                template=PythonOPTemplate(PropsMakeLAMMPS, image=self.dpgen_image_name, command=["python3"]),
                 artifacts={"input": relaxpost.outputs.artifacts["output_all"],
                            "param": upload_artifact(self.props_param)},
             )
-            self.propsmake = propsmake
         else:
             propsmake = Step(
                 name="Propsmake",
-                template=PythonOPTemplate(gn[f'PropsMake{self.Mod}'], image=self.dpgen_image_name, command=["python3"]),
+                template=PythonOPTemplate(PropsMakeLAMMPS, image=self.dpgen_image_name, command=["python3"]),
                 artifacts={"input": upload_artifact(work_dir),
                            "param": upload_artifact(self.props_param)},
             )
-            self.propsmake = propsmake
+        self.propsmake = propsmake
 
-        props = PythonOPTemplate(gn[f'Props{self.Mod}'],
-                                 slices=Slices("{{item}}", input_artifact=[f"input_{self.mod}"],
-                                               output_artifact=[f"output_{self.mod}"]), image=self.image_name, command=["python3"])
+        props = PythonOPTemplate(PropsLAMMPS,
+                                 slices=Slices("{{item}}", input_artifact=["input_lammps"],
+                                               output_artifact=["output_lammps"]), image=self.image_name, command=["python3"])
 
-        props_cal = Step(
-            name=f"Props{self.Mod}-Cal",
+        propscal = Step(
+            name="PropsLAMMPS-Cal",
             template=props,
-            artifacts={f"input_{self.mod}": propsmake.outputs.artifacts["jobs"]},
+            artifacts={"input_lammps": propsmake.outputs.artifacts["task_paths"]},
             parameters={"run_command": self.run_command},
             with_param=argo_range(propsmake.outputs.parameters["njobs"]),
-            key=f"{self.Mod}-Cal-{{item}}",
+            key="LAMMPS-Cal-{{item}}",
             executor=self.dispatcher_executor
         )
-        self.props_cal = props_cal
+        self.propscal = propscal
 
         propspost = Step(
             name="Propspost",
-            template=PythonOPTemplate(gn[f'PropsPost{self.Mod}'], image=self.dpgen_image_name, command=["python3"]),
-            artifacts={"input_post": props_cal.outputs.artifacts[f"output_{self.mod}"],
+            template=PythonOPTemplate(PropsPostLAMMPS, image=self.dpgen_image_name, command=["python3"]),
+            artifacts={"input_post": propscal.outputs.artifacts["output_lammps"],
                        "input_all": propsmake.outputs.artifacts["output"],
                        "param": upload_artifact(self.props_param)},
             parameters={"path": cwd}
@@ -250,18 +208,18 @@ class FlowGenerator(object):
         self.propspost = propspost
 
     @staticmethod
-    def assertion(wf, task_name):
+    def assertion(wf, task_type):
         while wf.query_status() in ["Pending", "Running"]:
             time.sleep(4)
         assert (wf.query_status() == 'Succeeded')
-        step = wf.query_step(name=f"{task_name}post")[0]
-        download_artifact(step.outputs.artifacts["output_confs"])
+        step = wf.query_step(name=f"{task_type}post")[0]
+        download_artifact(step.outputs.artifacts["output_post"])
 
     def generate_flow(self):
         if self.flow_type == 'relax':
             wf = Workflow(name='relaxation')
             wf.add(self.relaxmake)
-            wf.add(self.relax_cal)
+            wf.add(self.relaxcal)
             wf.add(self.relaxpost)
             wf.submit()
             self.assertion(wf, 'Relax')
@@ -269,7 +227,7 @@ class FlowGenerator(object):
         elif self.flow_type == 'props':
             wf = Workflow(name='properties')
             wf.add(self.propsmake)
-            wf.add(self.props_cal)
+            wf.add(self.propscal)
             wf.add(self.propspost)
             wf.submit()
             self.assertion(wf, 'Props')
@@ -277,10 +235,10 @@ class FlowGenerator(object):
         elif self.flow_type == 'joint':
             wf = Workflow(name='relax-props')
             wf.add(self.relaxmake)
-            wf.add(self.relax_cal)
+            wf.add(self.relaxcal)
             wf.add(self.relaxpost)
             wf.add(self.propsmake)
-            wf.add(self.props_cal)
+            wf.add(self.propscal)
             wf.add(self.propspost)
             wf.submit()
             self.assertion(wf, 'Props')

@@ -1,5 +1,5 @@
 {
-    "structures":       ["confs/std-bcc"],
+    "structures":       ["confs/std-*"],
     "interaction": {
         "type":          "vasp",
         "incar":         "vasp_input/INCAR",
@@ -8,8 +8,13 @@
     },
     "relaxation": {
         "cal_type":      "relaxation",
-        "cal_setting":  {"relax_pos":true,
-                         "relax_shape":true,
-                         "relax_vol":true}
-    }
+        "cal_setting":   {"relax_pos":       true,
+                          "relax_shape":     true,
+                          "relax_vol":       true,
+                          "ediff":           1e-6,
+                          "ediffg":         -0.01,
+                          "encut":           400,
+                          "kspacing":        0.2,
+                          "kgamma":          false}
+	}
 }

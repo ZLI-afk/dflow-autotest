@@ -1,15 +1,3 @@
-from typing import List
-from dflow import (
-    Workflow,
-    Step,
-    argo_range,
-    SlurmRemoteExecutor,
-    upload_artifact,
-    download_artifact,
-    InputArtifact,
-    OutputArtifact,
-    ShellOPTemplate
-)
 from dflow.python import (
     PythonOPTemplate,
     OP,
@@ -19,22 +7,27 @@ from dflow.python import (
     Slices,
     upload_packages
 )
-import time
 
 import subprocess, os, shutil, glob, dpdata, pathlib
 from pathlib import Path
 from typing import List
-from dflow.plugins.bohrium import BohriumContext, BohriumExecutor
-from dpdata.periodic_table import Element
 from monty.serialization import loadfn
-
 
 from dflow.python import upload_packages
 
-import shutil
 upload_packages.append(__file__)
 
 from .lib.utils import return_prop_list
+
+try:
+    from dpgen.auto_test.common_equi import (make_equi, post_equi)
+except:
+    pass
+
+try:
+    from dpgen.auto_test.common_prop import (make_property, post_property)
+except:
+    pass
 
 class RelaxMakeABACUS(OP):
     """
@@ -56,7 +49,7 @@ class RelaxMakeABACUS(OP):
         return OPIOSign({
             'output': Artifact(Path),
             'njobs': int,
-            'jobs': Artifact(List[Path])
+            'task_paths': Artifact(List[Path])
         })
 
     @OP.exec_sign_check
@@ -70,8 +63,10 @@ class RelaxMakeABACUS(OP):
         work_d = os.getcwd()
         param_argv = op_in["param"]
         structures = loadfn(param_argv)["structures"]
-        cmd = f'dpgen autotest make {param_argv}'
-        subprocess.call(cmd, shell=True)
+        inter_parameter = loadfn(param_argv)["interaction"]
+        parameter = loadfn(param_argv)["relaxation"]
+
+        make_equi(structures, inter_parameter, parameter)
 
         conf_dirs = []
         for conf in structures:
@@ -93,7 +88,7 @@ class RelaxMakeABACUS(OP):
         op_out = OPIO({
             "output": op_in["input"],
             "njobs": njobs,
-            "jobs": jobs
+            "task_paths": jobs
         })
         return op_out
 
@@ -144,16 +139,16 @@ class RelaxPostABACUS(OP):
     def get_input_sign(cls):
         return OPIOSign({
             'input_post': Artifact(Path, sub_path=False),
-            'path': str,
             'input_all': Artifact(Path, sub_path=False),
-            'param': Artifact(Path)
+            'param': Artifact(Path),
+            'path': str
         })
 
     @classmethod
     def get_output_sign(cls):
         return OPIOSign({
             'output_all': Artifact(Path, sub_path=False),
-            'output_confs': Artifact(Path, sub_path=False)
+            'output_post': Artifact(Path, sub_path=False)
         })
 
     @OP.exec_sign_check
@@ -163,15 +158,14 @@ class RelaxPostABACUS(OP):
         shutil.copytree(str(op_in['input_post']) + op_in['path'], './', dirs_exist_ok=True)
 
         param_argv = op_in['param']
-        cmd = f'dpgen autotest post {param_argv}'
-        subprocess.call(cmd, shell=True)
+        post_equi(loadfn(param_argv)["structures"], loadfn(param_argv)["interaction"])
 
         os.chdir(cwd)
         shutil.copytree(str(op_in['input_all']) + op_in['path'] + '/confs', './confs', dirs_exist_ok=True)
 
         op_out = OPIO({
             'output_all': Path(str(op_in["input_all"]) + op_in['path']),
-            'output_confs': Path('./confs')
+            'output_post': Path('./confs')
         })
         return op_out
 
@@ -196,7 +190,7 @@ class PropsMakeABACUS(OP):
         return OPIOSign({
             'output': Artifact(Path),
             'njobs': int,
-            'jobs': Artifact(List[Path])
+            'task_paths': Artifact(List[Path])
         })
 
     @OP.exec_sign_check
@@ -212,21 +206,17 @@ class PropsMakeABACUS(OP):
         structures = loadfn(param_argv)["structures"]
         inter_parameter = loadfn(param_argv)["interaction"]
         parameter = loadfn(param_argv)["properties"]
-        cmd = f'dpgen autotest make {param_argv}'
-        subprocess.call(cmd, shell=True)
+        make_property(structures, inter_parameter, parameter)
 
         conf_dirs = []
         for conf in structures:
             conf_dirs.extend(glob.glob(conf))
         conf_dirs.sort()
 
-        #from .lib.utils import return_prop_list
         prop_list = return_prop_list(parameter)
         task_list = []
         for ii in conf_dirs:
             conf_dir_global = os.path.join(work_d, ii)
-            #for jj in prop_list:
-            #    task_list.append(os.path.join(conf_dir_global, jj))
             for jj in prop_list:
                 prop = os.path.join(conf_dir_global, jj)
                 os.chdir(prop)
@@ -245,7 +235,7 @@ class PropsMakeABACUS(OP):
         op_out = OPIO({
             "output": op_in["input"],
             "njobs": njobs,
-            "jobs": jobs
+            "task_paths": jobs
         })
         return op_out
 
@@ -296,15 +286,15 @@ class PropsPostABACUS(OP):
     def get_input_sign(cls):
         return OPIOSign({
             'input_post': Artifact(Path, sub_path=False),
-            'path': str,
             'input_all': Artifact(Path, sub_path=False),
-            'param': Artifact(Path)
+            'param': Artifact(Path),
+            'path': str
         })
 
     @classmethod
     def get_output_sign(cls):
         return OPIOSign({
-            'output_confs': Artifact(Path, sub_path=False)
+            'output_post': Artifact(Path, sub_path=False)
         })
 
     @OP.exec_sign_check
@@ -314,13 +304,12 @@ class PropsPostABACUS(OP):
         shutil.copytree(str(op_in['input_post']) + op_in['path'], './', dirs_exist_ok=True)
 
         param_argv = op_in["param"]
-        cmd = f'dpgen autotest post {param_argv}'
-        subprocess.call(cmd, shell=True)
+        post_property(loadfn(param_argv)["structures"], loadfn(param_argv)["interaction"], loadfn(param_argv)["properties"])
 
         os.chdir(cwd)
         shutil.copytree(str(op_in['input_all']) + op_in['path'] + '/confs', './confs', dirs_exist_ok=True)
 
         op_out = OPIO({
-            'output_confs': Path('./confs')
+            'output_post': Path('./confs')
         })
         return op_out
