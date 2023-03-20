@@ -74,6 +74,7 @@ class LAMMPSFlow(object):
                     },
                 },
             },
+            image_pull_policy="IfNotPresent"
         )
 
         dispatcher_executor_gpu = DispatcherExecutor(
@@ -91,6 +92,7 @@ class LAMMPSFlow(object):
                     },
                 },
             },
+            image_pull_policy="IfNotPresent"
         )
         self.dispatcher_executor = dispatcher_executor_gpu
 
