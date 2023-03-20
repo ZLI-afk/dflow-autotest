@@ -17,7 +17,7 @@ s3_config["repo_key"] = "oss-bohrium"
 s3_config["storage_client"] = TiefblueClient()
 
 import argparse
-from .FlowGenerator import FlowGenerator
+#from .FlowGenerator import FlowGenerator
 from .VASP_flow import VASPFlow
 from .LAMMPS_flow import LAMMPSFlow
 from .ABACUS_flow import ABACUSFlow
