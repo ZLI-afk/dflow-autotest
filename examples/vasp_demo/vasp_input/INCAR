@@ -1,7 +1,7 @@
 ALGO = Normal
 EDIFF = 1e-06
 EDIFFG = -0.01
-ENCUT = 800
+ENCUT = 400
 IBRION = 2
 ICHARG = 2
 ISIF = 3

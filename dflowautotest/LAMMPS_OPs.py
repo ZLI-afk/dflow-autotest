@@ -1,15 +1,3 @@
-from typing import List
-from dflow import (
-    Workflow,
-    Step,
-    argo_range,
-    SlurmRemoteExecutor,
-    upload_artifact,
-    download_artifact,
-    InputArtifact,
-    OutputArtifact,
-    ShellOPTemplate
-)
 from dflow.python import (
     PythonOPTemplate,
     OP,
@@ -19,20 +7,25 @@ from dflow.python import (
     Slices,
     upload_packages
 )
-import time
 
 import subprocess, os, shutil, glob, dpdata, pathlib
 from pathlib import Path
 from typing import List
-from dflow.plugins.bohrium import BohriumContext, BohriumExecutor
-from dpdata.periodic_table import Element
 from monty.serialization import loadfn
 from dflow.python import upload_packages
-import shutil
 upload_packages.append(__file__)
 
 from .lib.utils import return_prop_list
 
+try:
+    from dpgen.auto_test.common_equi import (make_equi, post_equi)
+except:
+    pass
+
+try:
+    from dpgen.auto_test.common_prop import (make_property, post_property)
+except:
+    pass
 
 class RelaxMakeLAMMPS(OP):
     """
@@ -54,7 +47,7 @@ class RelaxMakeLAMMPS(OP):
         return OPIOSign({
             'output': Artifact(Path),
             'njobs': int,
-            'jobs': Artifact(List[Path])
+            'task_paths': Artifact(List[Path])
         })
 
     @OP.exec_sign_check
@@ -68,16 +61,16 @@ class RelaxMakeLAMMPS(OP):
         work_d = os.getcwd()
         param_argv = op_in["param"]
         structures = loadfn(param_argv)["structures"]
-        cmd = f'dpgen autotest make {param_argv}'
-        subprocess.call(cmd, shell=True)
+        inter_parameter = loadfn(param_argv)["interaction"]
+        parameter = loadfn(param_argv)["relaxation"]
+
+        make_equi(structures, inter_parameter, parameter)
 
         conf_dirs = []
         for conf in structures:
             conf_dirs.extend(glob.glob(conf))
         conf_dirs.sort()
 
-        #from .lib.utils import return_prop_list
-        #prop_list = return_prop_list(parameter)
         task_list = []
         for ii in conf_dirs:
             conf_dir_global = os.path.join(work_d, ii)
@@ -93,7 +86,7 @@ class RelaxMakeLAMMPS(OP):
         op_out = OPIO({
             "output": op_in["input"],
             "njobs": njobs,
-            "jobs": jobs
+            "task_paths": jobs
         })
         return op_out
 
@@ -144,16 +137,16 @@ class RelaxPostLAMMPS(OP):
     def get_input_sign(cls):
         return OPIOSign({
             'input_post': Artifact(Path, sub_path=False),
-            'path': str,
             'input_all': Artifact(Path, sub_path=False),
-            'param': Artifact(Path)
+            'param': Artifact(Path),
+            'path': str
         })
 
     @classmethod
     def get_output_sign(cls):
         return OPIOSign({
             'output_all': Artifact(Path, sub_path=False),
-            'output_confs': Artifact(Path, sub_path=False)
+            'output_post': Artifact(Path, sub_path=False)
         })
 
     @OP.exec_sign_check
@@ -163,15 +156,25 @@ class RelaxPostLAMMPS(OP):
         shutil.copytree(str(op_in['input_post']) + op_in['path'], './', dirs_exist_ok=True)
 
         param_argv = op_in['param']
-        cmd = f'dpgen autotest post {param_argv}'
-        subprocess.call(cmd, shell=True)
+        post_equi(loadfn(param_argv)["structures"], loadfn(param_argv)["interaction"])
+
+        conf_dirs = []
+        for conf in loadfn(param_argv)["structures"]:
+            conf_dirs.extend(glob.glob(conf))
+        conf_dirs.sort()
+
+        for ii in conf_dirs:
+            os.chdir(os.path.join(ii, 'relaxation/relax_task'))
+            cmd = 'rm *.pb'
+            subprocess.call(cmd, shell=True)
+            os.chdir("../../../../")
 
         os.chdir(cwd)
         shutil.copytree(str(op_in['input_all']) + op_in['path'] + '/confs', './confs', dirs_exist_ok = True)
 
         op_out = OPIO({
             'output_all': Path(str(op_in["input_all"])+op_in['path']),
-            'output_confs': Path('./confs')
+            'output_post': Path('./confs')
         })
         return op_out
 
@@ -195,7 +198,7 @@ class PropsMakeLAMMPS(OP):
         return OPIOSign({
             'output': Artifact(Path),
             'njobs': int,
-            'jobs': Artifact(List[Path])
+            'task_paths': Artifact(List[Path])
         })
 
     @OP.exec_sign_check
@@ -211,31 +214,19 @@ class PropsMakeLAMMPS(OP):
         structures = loadfn(param_argv)["structures"]
         inter_parameter = loadfn(param_argv)["interaction"]
         parameter = loadfn(param_argv)["properties"]
-        cmd = f'dpgen autotest make {param_argv}'
-        subprocess.call(cmd, shell=True)
+        make_property(structures, inter_parameter, parameter)
 
         conf_dirs = []
         for conf in structures:
             conf_dirs.extend(glob.glob(conf))
         conf_dirs.sort()
 
-        #from .lib.utils import return_prop_list
         prop_list = return_prop_list(parameter)
         task_list = []
         for ii in conf_dirs:
             conf_dir_global = os.path.join(work_d, ii)
             for jj in prop_list:
                 task_list.append(os.path.join(conf_dir_global, jj))
-            """
-            for jj in prop_list:
-                prop = os.path.join(conf_dir_global, jj)
-                os.chdir(prop)
-                prop_tasks = glob.glob(os.path.join(prop, 'task.*'))
-                prop_tasks.sort()
-                for kk in prop_tasks:
-                    #bbb = kk
-                    task_list.append(kk)
-            """
 
         all_jobs = task_list
         njobs = len(all_jobs)
@@ -247,7 +238,7 @@ class PropsMakeLAMMPS(OP):
         op_out = OPIO({
             "output": op_in["input"],
             "njobs": njobs,
-            "jobs": jobs
+            "task_paths": jobs
         })
         return op_out
 
@@ -277,7 +268,8 @@ class PropsLAMMPS(OP):
     def execute(self, op_in: OPIO) -> OPIO:
         cwd = os.getcwd()
         os.chdir(op_in["input_lammps"])
-        cmd = "for ii in task.*; do cd $ii; lmp -in in.lammps; cd ..; done"
+        lmp = op_in["run_command"]
+        cmd = "for ii in task.*; do cd $ii; " + lmp + "; cd ..; done"
         subprocess.call(cmd, shell=True)
         os.chdir(cwd)
         op_out = OPIO({
@@ -298,15 +290,15 @@ class PropsPostLAMMPS(OP):
     def get_input_sign(cls):
         return OPIOSign({
             'input_post': Artifact(Path, sub_path=False),
-            'path': str,
             'input_all': Artifact(Path, sub_path=False),
-            'param': Artifact(Path)
+            'param': Artifact(Path),
+            'path': str
         })
 
     @classmethod
     def get_output_sign(cls):
         return OPIOSign({
-            'output_confs': Artifact(Path, sub_path=False)
+            'output_post': Artifact(Path, sub_path=False)
         })
 
     @OP.exec_sign_check
@@ -316,14 +308,25 @@ class PropsPostLAMMPS(OP):
         shutil.copytree(str(op_in['input_post']) + op_in['path'], './', dirs_exist_ok=True)
 
         param_argv = op_in["param"]
-        cmd = f'dpgen autotest post {param_argv}'
-        subprocess.call(cmd, shell=True)
+        post_property(loadfn(param_argv)["structures"], loadfn(param_argv)["interaction"], loadfn(param_argv)["properties"])
+
+        conf_dirs = []
+        for conf in loadfn(param_argv)["structures"]:
+            conf_dirs.extend(glob.glob(conf))
+        conf_dirs.sort()
+
+        prop_list = return_prop_list(loadfn(param_argv)["properties"])
+        for ii in conf_dirs:
+            for jj in prop_list:
+                os.chdir(os.path.join(ii,jj))
+                cmd = "for kk in task.*; do cd $kk; rm *.pb; cd ..; done"
+                subprocess.call(cmd, shell=True)
+                os.chdir('../../../')
 
         os.chdir(cwd)
         shutil.copytree(str(op_in['input_all']) + op_in['path'] + '/confs', './confs', dirs_exist_ok=True)
 
         op_out = OPIO({
-            'output_confs': Path('./confs')
+            'output_post': Path('./confs')
         })
         return op_out
-

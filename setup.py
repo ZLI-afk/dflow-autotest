@@ -5,7 +5,7 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name="dflow-autotest",
-    version="0.0.1",
+    version="0.0.2",
     author="Zhuoyuan Li",
     author_email="zhuoyli@outlook.com",
     description="DPGEN autotest package based on dflow",
@@ -19,7 +19,8 @@ setuptools.setup(
         "dpdata>=0.2.13",
         "matplotlib",
         "dpgen",
-        "seekpath"
+        "seekpath",
+        "fpop"
     ],
     classifiers=[
         "Programming Language :: Python :: 3",
