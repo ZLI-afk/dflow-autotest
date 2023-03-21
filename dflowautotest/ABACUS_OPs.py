@@ -17,7 +17,7 @@ from dflow.python import upload_packages
 
 upload_packages.append(__file__)
 
-from .lib.utils import return_prop_list
+from dflowautotest.lib.utils import return_prop_list
 
 try:
     from dpgen.auto_test.common_equi import (make_equi, post_equi)

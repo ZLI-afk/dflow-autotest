@@ -17,10 +17,10 @@ s3_config["repo_key"] = "oss-bohrium"
 s3_config["storage_client"] = TiefblueClient()
 
 import argparse
-#from .FlowGenerator import FlowGenerator
-from .VASP_flow import VASPFlow
-from .LAMMPS_flow import LAMMPSFlow
-from .ABACUS_flow import ABACUSFlow
+from dflowautotest.VASP_flow import VASPFlow
+from dflowautotest.LAMMPS_flow import LAMMPSFlow
+from dflowautotest.ABACUS_flow import ABACUSFlow
+
 def parse_args():
     parser = argparse.ArgumentParser()
     parser.add_argument('files', type=str, nargs='+',
@@ -31,7 +31,6 @@ def parse_args():
                         action="store_true")
     parser.add_argument("--lammps", help="Using LAMMPS to perform autotest",
                         action="store_true")
-    #parser.add_argument("--relax", help="Run relaxation before test properties", action="store_true")
     args = parser.parse_args()
     return args
 
@@ -41,10 +40,13 @@ def main():
         flow = ABACUSFlow(args)
     elif args.lammps:
         flow = LAMMPSFlow(args)
-    else:
+    elif args.vasp:
         flow = VASPFlow(args)
+    else:
+        raise RuntimeError('Must indicate how to preform the calculation by indicating --lammps; --vasp; --abacus')
     flow.init_steps()
     flow.generate_flow()
+
 
 if __name__ == '__main__':
     main()

@@ -26,7 +26,7 @@ except:
 import shutil
 upload_packages.append(__file__)
 
-from .lib.utils import return_prop_list
+from dflowautotest.lib.utils import return_prop_list
 
 
 class RelaxMakeVASP(OP):
