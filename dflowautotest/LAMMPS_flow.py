@@ -22,7 +22,7 @@ import time, os
 from dflow.plugins.dispatcher import DispatcherExecutor
 from monty.serialization import loadfn
 from dflow.python import upload_packages
-from LAMMPS_OPs import (
+from dflowautotest.LAMMPS_OPs import (
     RelaxMakeLAMMPS,
     RelaxLAMMPS,
     RelaxPostLAMMPS,
