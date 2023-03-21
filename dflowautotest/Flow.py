@@ -6,7 +6,7 @@ from monty.serialization import loadfn
 
 from dflow import download_artifact, Workflow
 
-from lib.utils import identify_task
+from dflowautotest.lib.utils import identify_task
 
 
 class Flow(ABC):
