@@ -5,8 +5,8 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name="dflow-autotest",
-    version="0.0.2",
-    author="Zhuoyuan Li",
+    version="0.1.0",
+    author="Zhuoyuan Li, Tongqi Wen",
     author_email="zhuoyli@outlook.com",
     description="DPGEN autotest package based on dflow",
     long_description=long_description,

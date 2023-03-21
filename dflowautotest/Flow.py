@@ -64,6 +64,12 @@ class Flow(ABC):
 
     @abstractmethod
     def init_steps(self):
+        """
+        Define workflow steps for dflowautotest.
+        IMPORTANT: total six steps are required to be defined as attributes in this method,
+        and should be named strictly by self.relaxmake; self.relaxcal; self.relaxpost;
+        self.propsmake; self.propscal; self.propspost.
+        """
         pass
 
     @staticmethod
