@@ -18,9 +18,8 @@ from dflow.python import (
     Slices,
     upload_packages
 )
-import time, os
+import os
 from dflow.plugins.dispatcher import DispatcherExecutor
-from monty.serialization import loadfn
 from dflow.python import upload_packages
 from dflowautotest.LAMMPS_OPs import (
     RelaxMakeLAMMPS,
