@@ -22,6 +22,7 @@ dflowautotest param_relax.json --vasp
 
 If you want to use ABACUS code, like the folder `abacus_demo`. You need to prepare `INPUT`, `STRU`, `*.UPF`, `global.json`, `param_relax.json`, `param_props.json` (notice that `*.orb` and `KPT` are optional ), then：
 ```
+dflowautotest param_relax.json param_props.json --abacus
 ```
 
 If you want to use LAMMPS to do MD calculation, like the folder `lammps_demo`. You need to prepare `POSCAR`, `frozen_model.pb`, `global.json`, `param_relax.json`, `param_props.json`, then:
