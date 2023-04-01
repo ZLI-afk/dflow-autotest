@@ -3,7 +3,6 @@ import os
 import shutil
 import warnings
 from multiprocessing import Pool
-
 from monty.serialization import dumpfn
 from packaging.version import Version
 
@@ -16,8 +15,10 @@ from dflowautotest.auto_test.lib.utils import create_path
 from dflowautotest.auto_test.mpdb import get_structure
 #from dpgen.dispatcher.Dispatcher import make_submission
 #from dpgen.remote.decide_machine import convert_mdata
-
+from dflow.python import upload_packages
+upload_packages.append(__file__)
 lammps_task_type = ["deepmd", "meam", "eam_fs", "eam_alloy"]
+
 
 
 def make_equi(confs, inter_param, relax_param):

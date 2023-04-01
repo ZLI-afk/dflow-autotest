@@ -4,6 +4,8 @@ import numpy as np
 from dpdata.abacus.scf import get_cell, get_coords, get_nele_from_stru
 
 from dflowautotest.auto_test.lib import vasp
+from dflow.python import upload_packages
+upload_packages.append(__file__)
 
 bohr2ang = 0.52917721067
 

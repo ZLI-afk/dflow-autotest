@@ -4,6 +4,8 @@ import os
 
 import numpy as np
 from pymatgen.io.vasp import Incar
+from dflow.python import upload_packages
+upload_packages.append(__file__)
 
 
 def _make_vasp_incar_dict(

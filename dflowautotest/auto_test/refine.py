@@ -3,6 +3,8 @@ import os
 import re
 
 import dflowautotest.auto_test.lib.abacus as abacus
+from dflow.python import upload_packages
+upload_packages.append(__file__)
 
 
 def make_refine(init_from_suffix, output_suffix, path_to_work):

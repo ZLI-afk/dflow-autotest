@@ -18,6 +18,8 @@ from dflowautotest.auto_test.Vacancy import Vacancy
 #from dpgen.dispatcher.Dispatcher import make_submission
 #from dpgen.remote.decide_machine import convert_mdata
 from dflowautotest.lib.util import sepline
+from dflow.python import upload_packages
+upload_packages.append(__file__)
 
 lammps_task_type = ["deepmd", "meam", "eam_fs", "eam_alloy"]
 

@@ -13,6 +13,8 @@ import dflowautotest.lib.abacus_scf as abacus_scf
 from dflowautotest.auto_test.Property import Property
 from dflowautotest.auto_test.refine import make_refine
 from dflowautotest.auto_test.reproduce import make_repro, post_repro
+from dflow.python import upload_packages
+upload_packages.append(__file__)
 
 
 class EOS(Property):

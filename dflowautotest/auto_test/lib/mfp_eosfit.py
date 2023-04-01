@@ -12,6 +12,8 @@ import scipy.integrate as INT
 from scipy.interpolate import *
 from scipy.misc import derivative
 from scipy.optimize import curve_fit, fsolve, leastsq, minimize, root
+from dflow.python import upload_packages
+upload_packages.append(__file__)
 
 kb = 1.3806488e-23  # J K^-1
 kb_ev = 8.6173324e-05  # eV K^-1

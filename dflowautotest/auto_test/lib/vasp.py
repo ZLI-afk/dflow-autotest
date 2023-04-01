@@ -8,6 +8,8 @@ from pymatgen.io.vasp import Incar, Kpoints, Potcar
 import dflowautotest.auto_test.lib.lammps as lammps
 import dflowautotest.auto_test.lib.util as util
 from dflowautotest.lib.vasp import incar_upper
+from dflow.python import upload_packages
+upload_packages.append(__file__)
 
 
 class OutcarItemError(Exception):

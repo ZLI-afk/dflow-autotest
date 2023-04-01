@@ -10,6 +10,8 @@ import dflowautotest.auto_test.lib.vasp as vasp
 from dflowautotest.auto_test.Task import Task
 from dflowautotest.lib.vasp import incar_upper
 from dflowautotest.lib.util import sepline
+from dflow.python import upload_packages
+upload_packages.append(__file__)
 
 
 class VASP(Task):

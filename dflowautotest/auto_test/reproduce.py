@@ -5,6 +5,8 @@ import numpy as np
 from monty.serialization import loadfn
 
 import dflowautotest.auto_test.lib.abacus as abacus
+from dflow.python import upload_packages
+upload_packages.append(__file__)
 
 
 def make_repro(

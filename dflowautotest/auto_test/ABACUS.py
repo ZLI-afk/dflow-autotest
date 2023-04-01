@@ -9,6 +9,8 @@ import dflowautotest.lib.abacus_scf as abacus_scf
 #from dpgen import dlog
 from dflowautotest.auto_test.Task import Task
 from dflowautotest.lib.util import sepline
+from dflow.python import upload_packages
+upload_packages.append(__file__)
 
 
 class ABACUS(Task):

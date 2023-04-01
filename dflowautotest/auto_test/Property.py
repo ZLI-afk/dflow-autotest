@@ -6,6 +6,8 @@ from abc import ABC, abstractmethod
 from monty.serialization import dumpfn
 
 from dflowautotest.auto_test.calculator import make_calculator
+from dflow.python import upload_packages
+upload_packages.append(__file__)
 
 
 class Property(ABC):

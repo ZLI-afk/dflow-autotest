@@ -1,4 +1,6 @@
 from abc import ABC, abstractmethod
+from dflow.python import upload_packages
+upload_packages.append(__file__)
 
 
 class Task(ABC):

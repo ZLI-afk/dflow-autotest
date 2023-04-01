@@ -2,6 +2,8 @@ import os
 
 from pymatgen.core import Structure
 from pymatgen.ext.matproj import MPRester, MPRestError
+from dflow.python import upload_packages
+upload_packages.append(__file__)
 
 #from dpgen import dlog
 

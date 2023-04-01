@@ -8,6 +8,8 @@ import numpy as np
 from pymatgen.core.structure import Structure
 
 import dflowautotest.lib.abacus_scf as abacus_scf
+from dflow.python import upload_packages
+upload_packages.append(__file__)
 
 A2BOHR = 1.8897261254578281
 MASS_DICT = {

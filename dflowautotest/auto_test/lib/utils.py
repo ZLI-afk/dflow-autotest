@@ -4,6 +4,8 @@ import logging
 import os
 import re
 import shutil
+from dflow.python import upload_packages
+upload_packages.append(__file__)
 
 iter_format = "%s"
 task_format = "%s"

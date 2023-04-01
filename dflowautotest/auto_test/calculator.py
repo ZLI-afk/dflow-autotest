@@ -1,6 +1,8 @@
 from dflowautotest.auto_test.ABACUS import ABACUS
 from dflowautotest.auto_test.Lammps import Lammps
 from dflowautotest.auto_test.VASP import VASP
+from dflow.python import upload_packages
+upload_packages.append(__file__)
 
 
 def make_calculator(inter_parameter, path_to_poscar):

@@ -8,6 +8,8 @@ from pymatgen.analysis.structure_matcher import StructureMatcher
 from pymatgen.ext.matproj import Composition, MPRester
 
 import dflowautotest.auto_test.lib.crys as crys
+from dflow.python import upload_packages
+upload_packages.append(__file__)
 
 global_std_crystal = {
     "fcc": crys.fcc,

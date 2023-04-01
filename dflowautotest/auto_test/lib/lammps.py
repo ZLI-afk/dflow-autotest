@@ -10,6 +10,8 @@ from dpdata.periodic_table import Element
 from packaging.version import Version
 
 import dflowautotest.auto_test.lib.util as util
+from dflow.python import upload_packages
+upload_packages.append(__file__)
 
 
 def cvt_lammps_conf(fin, fout, type_map, ofmt="lammps/data"):

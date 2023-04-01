@@ -7,6 +7,8 @@ import requests
 #from dpgen import dlog
 from dflowautotest.auto_test.lib import abacus, lammps, vasp
 from dflowautotest.auto_test.lib.utils import cmd_append_log
+from dflow.python import upload_packages
+upload_packages.append(__file__)
 
 lammps_task_type = ["deepmd", "meam", "eam_fs", "eam_alloy"]  # 06/13 revised
 

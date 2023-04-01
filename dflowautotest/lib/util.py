@@ -1,3 +1,5 @@
+from dflow.python import upload_packages
+upload_packages.append(__file__)
 # constants define
 MaxLength = 70
 

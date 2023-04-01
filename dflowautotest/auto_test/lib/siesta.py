@@ -1,5 +1,7 @@
 import numpy as np
 from dpdata.periodic_table import Element
+from dflow.python import upload_packages
+upload_packages.append(__file__)
 
 
 def _make_siesta_01_common(sys_data, ecut, ediff, mixingWeight, NumberPulay):

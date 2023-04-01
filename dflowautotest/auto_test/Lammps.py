@@ -12,6 +12,8 @@ from dflowautotest.auto_test.lib.lammps import (
     inter_meam,
 )
 from dflowautotest.auto_test.Task import Task
+from dflow.python import upload_packages
+upload_packages.append(__file__)
 
 supported_inter = ["deepmd", "meam", "eam_fs", "eam_alloy"]
 

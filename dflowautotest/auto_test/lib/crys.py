@@ -1,6 +1,8 @@
 import numpy as np
 from pymatgen.core.lattice import Lattice
 from pymatgen.core.structure import Structure
+from dflow.python import upload_packages
+upload_packages.append(__file__)
 
 
 def fcc(ele_name="ele", a=4.05):
