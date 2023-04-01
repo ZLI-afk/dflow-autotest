@@ -8,22 +8,14 @@ from dflow.python import (
     upload_packages
 )
 
-import os, glob, dpdata, pathlib
+import os, glob, dpdata, pathlib, shutil
 from pathlib import Path
 from typing import List
 from monty.serialization import loadfn
 
-try:
-    from dpgen.auto_test.common_equi import (make_equi, post_equi)
-except:
-    pass
-
-try:
-    from dpgen.auto_test.common_prop import (make_property, post_property)
-except:
-    pass
-
-import shutil
+from dflowautotest.auto_test.common_equi import (make_equi, post_equi)
+from dflowautotest.auto_test.common_prop import (make_property, post_property)
+from dflowautotest.lib.utils import return_prop_list
 upload_packages.append(__file__)
 
 from dflowautotest.lib.utils import return_prop_list
