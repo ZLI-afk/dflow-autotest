@@ -19,6 +19,7 @@ from dflow.python import (
     upload_packages
 )
 import os
+from monty.serialization import loadfn
 from dflow.plugins.dispatcher import DispatcherExecutor
 from dflow.python import upload_packages
 from dflowautotest.LAMMPS_OPs import (
@@ -39,6 +40,25 @@ class LAMMPSFlow(Flow):
     """
     def __init__(self, args):
         super().__init__(args)
+        # initiate params defined in global.json
+        global_param = loadfn("global.json")
+        self.args = args
+        self.global_param = global_param
+        self.work_dir = global_param.get("work_dir", None)
+        self.email = global_param.get("email", None)
+        self.password = global_param.get("password", None)
+        self.program_id = global_param.get("program_id", None)
+        self.dpgen_image_name = global_param.get("dpgen_image_name", None)
+        self.vasp_image_name = global_param.get("vasp_image_name", None)
+        self.dpmd_image_name = global_param.get("dpmd_image_name", None)
+        self.abacus_image_name = global_param.get("abacus_image_name", None)
+        self.cpu_scass_type = global_param.get("cpu_scass_type", None)
+        self.gpu_scass_type = global_param.get("gpu_scass_type", None)
+        self.lammps_run_command = global_param.get("lammps_run_command", None)
+        self.vasp_run_command = global_param.get("vasp_run_command", None)
+        self.abacus_run_command = global_param.get("abacus_run_command", None)
+        self.upload_python_packages = global_param.get("upload_python_packages", None)
+
         # define dispatcher_executors
         dispatcher_executor_cpu = DispatcherExecutor(
             machine_dict={
