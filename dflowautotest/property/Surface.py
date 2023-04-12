@@ -9,8 +9,8 @@ from monty.serialization import dumpfn, loadfn
 from pymatgen.core.structure import Structure
 from pymatgen.core.surface import generate_all_slabs
 
-import dflowautotest.property.lib.abacus as abacus
-import dflowautotest.property.lib.vasp as vasp
+import dflowautotest.calculator.lib.abacus as abacus
+import dflowautotest.calculator.lib.vasp as vasp
 #from dpgen import dlog
 from dflowautotest.property.Property import Property
 from dflowautotest.property.refine import make_refine

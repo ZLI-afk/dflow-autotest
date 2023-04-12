@@ -7,7 +7,7 @@ from packaging.version import Version
 
 import dflowautotest.property.lib.util as util
 #from dpgen import dlog
-from dflowautotest.property.calculator import make_calculator
+from dflowautotest.calculator.calculator import make_calculator
 from dflowautotest.property.Elastic import Elastic
 from dflowautotest.property.EOS import EOS
 from dflowautotest.property.Gamma import Gamma

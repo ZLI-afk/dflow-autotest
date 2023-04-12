@@ -8,8 +8,8 @@ from monty.serialization import dumpfn, loadfn
 from pymatgen.analysis.defects.generators import InterstitialGenerator
 from pymatgen.core.structure import Structure
 
-import dflowautotest.property.lib.abacus as abacus
-import dflowautotest.property.lib.lammps as lammps
+import dflowautotest.calculator.lib.abacus as abacus
+import dflowautotest.calculator.lib.lammps as lammps
 from dflowautotest.property.Property import Property
 from dflowautotest.property.refine import make_refine
 from dflowautotest.property.reproduce import make_repro, post_repro

@@ -4,7 +4,7 @@ import os
 import numpy as np
 from monty.serialization import loadfn
 
-import dflowautotest.property.lib.abacus as abacus
+import dflowautotest.calculator.lib.abacus as abacus
 from dflow.python import upload_packages
 upload_packages.append(__file__)
 

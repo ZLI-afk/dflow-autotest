@@ -6,8 +6,8 @@ import re
 import numpy as np
 from monty.serialization import dumpfn, loadfn
 
-import dflowautotest.property.lib.abacus as abacus
-import dflowautotest.property.lib.vasp as vasp
+import dflowautotest.calculator.lib.abacus as abacus
+import dflowautotest.calculator.lib.vasp as vasp
 import dflowautotest.calculator.lib.abacus_scf as abacus_scf
 #from dpgen import dlog
 from dflowautotest.property.Property import Property

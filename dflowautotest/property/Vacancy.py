@@ -8,7 +8,7 @@ from monty.serialization import dumpfn, loadfn
 from pymatgen.analysis.defects.generators import VacancyGenerator
 from pymatgen.core.structure import Structure
 
-import dflowautotest.property.lib.abacus as abacus
+import dflowautotest.calculator.lib.abacus as abacus
 #from dpgen import dlog
 from dflowautotest.property.Property import Property
 from dflowautotest.property.refine import make_refine

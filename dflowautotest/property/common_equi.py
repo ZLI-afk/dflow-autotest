@@ -6,11 +6,11 @@ from multiprocessing import Pool
 from monty.serialization import dumpfn
 from packaging.version import Version
 
-import dflowautotest.property.lib.abacus as abacus
+import dflowautotest.calculator.lib.abacus as abacus
 import dflowautotest.property.lib.crys as crys
 import dflowautotest.property.lib.util as util
 #from dpgen import dlog
-from dflowautotest.property.calculator import make_calculator
+from dflowautotest.calculator.calculator import make_calculator
 from dflowautotest.property.lib.utils import create_path
 from dflowautotest.property.mpdb import get_structure
 #from dpgen.dispatcher.Dispatcher import make_submission

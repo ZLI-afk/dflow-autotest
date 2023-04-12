@@ -5,7 +5,7 @@ from abc import ABC, abstractmethod
 
 from monty.serialization import dumpfn
 
-from dflowautotest.property.calculator import make_calculator
+from dflowautotest.calculator.calculator import make_calculator
 from dflow.python import upload_packages
 upload_packages.append(__file__)
 

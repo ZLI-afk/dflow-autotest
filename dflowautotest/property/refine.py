@@ -2,7 +2,7 @@ import glob
 import os
 import re
 
-import dflowautotest.property.lib.abacus as abacus
+import dflowautotest.calculator.lib.abacus as abacus
 from dflow.python import upload_packages
 upload_packages.append(__file__)
 
