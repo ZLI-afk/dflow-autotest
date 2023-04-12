@@ -5,16 +5,16 @@ from multiprocessing import Pool
 
 from packaging.version import Version
 
-import dflowautotest.auto_test.lib.util as util
+import dflowautotest.property.lib.util as util
 #from dpgen import dlog
-from dflowautotest.auto_test.calculator import make_calculator
-from dflowautotest.auto_test.Elastic import Elastic
-from dflowautotest.auto_test.EOS import EOS
-from dflowautotest.auto_test.Gamma import Gamma
-from dflowautotest.auto_test.Interstitial import Interstitial
-from dflowautotest.auto_test.lib.utils import create_path
-from dflowautotest.auto_test.Surface import Surface
-from dflowautotest.auto_test.Vacancy import Vacancy
+from dflowautotest.property.calculator import make_calculator
+from dflowautotest.property.Elastic import Elastic
+from dflowautotest.property.EOS import EOS
+from dflowautotest.property.Gamma import Gamma
+from dflowautotest.property.Interstitial import Interstitial
+from dflowautotest.property.lib.utils import create_path
+from dflowautotest.property.Surface import Surface
+from dflowautotest.property.Vacancy import Vacancy
 #from dpgen.dispatcher.Dispatcher import make_submission
 #from dpgen.remote.decide_machine import convert_mdata
 from dflowautotest.lib.util import sepline
@@ -42,7 +42,7 @@ def make_property_instance(parameters, inter_param):
     elif prop_type == "gamma":
         return Gamma(parameters, inter_param)
     else:
-        raise RuntimeError(f"unknown property type {prop_type}")
+        raise RuntimeError(f"unknown dflowautotest type {prop_type}")
 
 
 def make_property(confs, inter_param, property_list):

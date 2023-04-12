@@ -7,7 +7,7 @@ import re
 from pymatgen.analysis.structure_matcher import StructureMatcher
 from pymatgen.ext.matproj import Composition, MPRester
 
-import dflowautotest.auto_test.lib.crys as crys
+import dflowautotest.property.lib.crys as crys
 from dflow.python import upload_packages
 upload_packages.append(__file__)
 

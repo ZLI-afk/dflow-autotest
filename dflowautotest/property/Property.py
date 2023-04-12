@@ -5,7 +5,7 @@ from abc import ABC, abstractmethod
 
 from monty.serialization import dumpfn
 
-from dflowautotest.auto_test.calculator import make_calculator
+from dflowautotest.property.calculator import make_calculator
 from dflow.python import upload_packages
 upload_packages.append(__file__)
 
@@ -19,26 +19,26 @@ class Property(ABC):
         Parameters
         ----------
         parameter : dict
-            A dict that defines the property.
+            A dict that defines the dflowautotest.
         """
         pass
 
     @abstractmethod
     def make_confs(self, path_to_work, path_to_equi, refine=False):
         """
-        Make configurations needed to compute the property.
+        Make configurations needed to compute the dflowautotest.
         The tasks directory will be named as path_to_work/task.xxxxxx
         IMPORTANT: handel the case when the directory exists.
 
         Parameters
         ----------
         path_to_work : str
-            The path where the tasks for the property are located
+            The path where the tasks for the dflowautotest are located
         path_to_equi : str
             -refine == False: The path to the directory that equilibrated the configuration.
-            -refine == True: The path to the directory that has property confs.
+            -refine == True: The path to the directory that has dflowautotest confs.
         refine : str
-            To refine existing property confs or generate property confs from a equilibrated conf
+            To refine existing dflowautotest confs or generate dflowautotest confs from a equilibrated conf
 
         Returns
         -------
@@ -72,15 +72,15 @@ class Property(ABC):
 
     def compute(self, output_file, print_file, path_to_work):
         """
-        Postprocess the finished tasks to compute the property.
+        Postprocess the finished tasks to compute the dflowautotest.
         Output the result to a json database
 
         Parameters
         ----------
         output_file:
-            The file to output the property in json format
+            The file to output the dflowautotest in json format
         print_file:
-            The file to output the property in txt format
+            The file to output the dflowautotest in txt format
         path_to_work:
             The working directory where the computational tasks locate.
         """
@@ -110,12 +110,12 @@ class Property(ABC):
     @abstractmethod
     def _compute_lower(self, output_file, all_tasks, all_res):
         """
-        Compute the property.
+        Compute the dflowautotest.
 
         Parameters
         ----------
         output_file:
-            The file to output the property
+            The file to output the dflowautotest
         all_tasks : list of str
             The list of directories to the tasks
         all_res : list of str
@@ -123,7 +123,7 @@ class Property(ABC):
         Returns:
         -------
         res_data : dist
-            The dict storing the result of the property
+            The dict storing the result of the dflowautotest
         ptr_data : str
             The result printed in string format
         """

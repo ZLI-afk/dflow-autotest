@@ -14,8 +14,8 @@ from typing import List
 from monty.serialization import loadfn
 
 try:
-    from dflowautotest.auto_test.common_equi import (make_equi, post_equi)
-    from dflowautotest.auto_test.common_prop import (make_property, post_property)
+    from dflowautotest.property.common_equi import (make_equi, post_equi)
+    from dflowautotest.property.common_prop import (make_property, post_property)
 except:
     pass
 from dflowautotest.lib.utils import return_prop_list

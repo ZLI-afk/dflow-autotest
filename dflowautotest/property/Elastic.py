@@ -10,13 +10,13 @@ from pymatgen.analysis.elasticity.stress import Stress
 from pymatgen.core.structure import Structure
 from pymatgen.io.vasp import Incar, Kpoints
 
-import dflowautotest.auto_test.lib.abacus as abacus
-import dflowautotest.auto_test.lib.vasp as vasp
-import dflowautotest.lib.abacus_scf as abacus_scf
+import dflowautotest.property.lib.abacus as abacus
+import dflowautotest.property.lib.vasp as vasp
+import dflowautotest.calculator.lib.abacus_scf as abacus_scf
 #from dflowautotest import dlog
-from dflowautotest.auto_test.Property import Property
-from dflowautotest.auto_test.refine import make_refine
-from dflowautotest.lib.vasp import incar_upper
+from dflowautotest.property.Property import Property
+from dflowautotest.property.refine import make_refine
+from dflowautotest.calculator.lib.vasp import incar_upper
 from dflow.python import upload_packages
 upload_packages.append(__file__)
 

@@ -6,13 +6,13 @@ from multiprocessing import Pool
 from monty.serialization import dumpfn
 from packaging.version import Version
 
-import dflowautotest.auto_test.lib.abacus as abacus
-import dflowautotest.auto_test.lib.crys as crys
-import dflowautotest.auto_test.lib.util as util
+import dflowautotest.property.lib.abacus as abacus
+import dflowautotest.property.lib.crys as crys
+import dflowautotest.property.lib.util as util
 #from dpgen import dlog
-from dflowautotest.auto_test.calculator import make_calculator
-from dflowautotest.auto_test.lib.utils import create_path
-from dflowautotest.auto_test.mpdb import get_structure
+from dflowautotest.property.calculator import make_calculator
+from dflowautotest.property.lib.utils import create_path
+from dflowautotest.property.mpdb import get_structure
 #from dpgen.dispatcher.Dispatcher import make_submission
 #from dpgen.remote.decide_machine import convert_mdata
 from dflow.python import upload_packages
@@ -109,7 +109,7 @@ def make_equi(confs, inter_param, relax_param):
 
         relax_dirs = os.path.abspath(
             os.path.join(ii, "relaxation", "relax_task")
-        )  # to be consistent with property in make dispatcher
+        )  # to be consistent with dflowautotest in make dispatcher
         create_path(relax_dirs)
         task_dirs.append(relax_dirs)
         os.chdir(relax_dirs)

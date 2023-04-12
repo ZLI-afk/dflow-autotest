@@ -5,8 +5,8 @@ import numpy as np
 import requests
 
 #from dpgen import dlog
-from dflowautotest.auto_test.lib import abacus, lammps, vasp
-from dflowautotest.auto_test.lib.utils import cmd_append_log
+from dflowautotest.property.lib import abacus, lammps, vasp
+from dflowautotest.property.lib.utils import cmd_append_log
 from dflow.python import upload_packages
 upload_packages.append(__file__)
 

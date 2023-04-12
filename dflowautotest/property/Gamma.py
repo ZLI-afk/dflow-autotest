@@ -13,12 +13,12 @@ from pymatgen.core.structure import Structure
 from pymatgen.core.surface import SlabGenerator
 from pymatgen.io.ase import AseAtomsAdaptor
 
-import dflowautotest.auto_test.lib.abacus as abacus
-import dflowautotest.auto_test.lib.vasp as vasp
+import dflowautotest.property.lib.abacus as abacus
+import dflowautotest.property.lib.vasp as vasp
 #from dpgen import dlog
-from dflowautotest.auto_test.Property import Property
-from dflowautotest.auto_test.refine import make_refine
-from dflowautotest.auto_test.reproduce import make_repro, post_repro
+from dflowautotest.property.Property import Property
+from dflowautotest.property.refine import make_refine
+from dflowautotest.property.reproduce import make_repro, post_repro
 from dflow.python import upload_packages
 upload_packages.append(__file__)
 
