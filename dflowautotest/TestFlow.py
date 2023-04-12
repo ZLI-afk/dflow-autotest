@@ -7,7 +7,7 @@ from dflow import download_artifact, Workflow
 from dflowautotest.lib.utils import identify_task
 
 
-class Flow(ABC):
+class TestFlow(ABC):
     def __init__(self, args):
         # identify type of flow and input parameter file
         num_args = len(args.files)

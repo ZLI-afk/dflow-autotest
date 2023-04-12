@@ -30,12 +30,12 @@ from dflowautotest.ABACUS_OPs import (
     PropsABACUS,
     PropsPostABACUS
 )
-from dflowautotest.Flow import Flow
+from dflowautotest.TestFlow import TestFlow
 
 upload_packages.append(__file__)
 
 
-class ABACUSFlow(Flow):
+class ABACUSFlow(TestFlow):
     """
     Generate autotest workflow and automatically submit abacus jobs according to user input arguments.
     """

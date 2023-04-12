@@ -30,7 +30,7 @@ from dflowautotest.VASP_OPs import (
     PropsMakeVASP,
     PropsPostVASP
 )
-from dflowautotest.Flow import Flow
+from dflowautotest.TestFlow import TestFlow
 
 from fpop.vasp import PrepVasp, VaspInputs, RunVasp
 from fpop.utils.step_config import (
@@ -38,7 +38,7 @@ from fpop.utils.step_config import (
 )
 
 
-class VASPFlow(Flow):
+class VASPFlow(TestFlow):
     """
     Generate autotest workflow and submit automatically for VASP Calculations.
     """

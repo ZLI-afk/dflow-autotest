@@ -30,11 +30,11 @@ from dflowautotest.LAMMPS_OPs import (
     PropsLAMMPS,
     PropsPostLAMMPS
 )
-from dflowautotest.Flow import Flow
+from dflowautotest.TestFlow import TestFlow
 
 upload_packages.append(__file__)
 
-class LAMMPSFlow(Flow):
+class LAMMPSFlow(TestFlow):
     """
     Generate autotest workflow and automatically submit lammps jobs according to user input arguments.
     """
