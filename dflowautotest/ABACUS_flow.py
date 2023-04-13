@@ -49,20 +49,18 @@ class ABACUSFlow(TestFlow):
         self.password = global_param.get("password", None)
         self.program_id = global_param.get("program_id", None)
         self.dpgen_image_name = global_param.get("dpgen_image_name", None)
-        self.vasp_image_name = global_param.get("vasp_image_name", None)
-        self.dpmd_image_name = global_param.get("dpmd_image_name", None)
         self.abacus_image_name = global_param.get("abacus_image_name", None)
         self.cpu_scass_type = global_param.get("cpu_scass_type", None)
         self.gpu_scass_type = global_param.get("gpu_scass_type", None)
-        self.lammps_run_command = global_param.get("lammps_run_command", None)
-        self.vasp_run_command = global_param.get("vasp_run_command", None)
+        self.batch_type = global_param.get("batch_type", None)
+        self.context_type = global_param.get("context_type", None)
         self.abacus_run_command = global_param.get("abacus_run_command", None)
         self.upload_python_packages = global_param.get("upload_python_packages", None)
 
         dispatcher_executor_cpu = DispatcherExecutor(
             machine_dict={
-                "batch_type": "Bohrium",
-                "context_type": "Bohrium",
+                "batch_type": self.batch_type,
+                "context_type": self.context_type,
                 "remote_profile": {
                     "email": self.email,
                     "password": self.password,
@@ -79,8 +77,8 @@ class ABACUSFlow(TestFlow):
 
         dispatcher_executor_gpu = DispatcherExecutor(
             machine_dict={
-                "batch_type": "Bohrium",
-                "context_type": "Bohrium",
+                "batch_type": self.batch_type,
+                "context_type": self.context_type,
                 "remote_profile": {
                     "email": self.email,
                     "password": self.password,
