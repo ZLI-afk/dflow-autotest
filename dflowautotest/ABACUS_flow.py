@@ -24,11 +24,10 @@ from dflow.plugins.dispatcher import DispatcherExecutor
 from dflow.python import upload_packages
 from dflowautotest.ABACUS_OPs import (
     RelaxMakeABACUS,
-    RelaxABACUS,
     RelaxPostABACUS,
     PropsMakeABACUS,
-    PropsABACUS,
-    PropsPostABACUS
+    PropsPostABACUS,
+    RunABACUS
 )
 from dflowautotest.TestFlow import TestFlow
 
@@ -109,7 +108,7 @@ class ABACUSFlow(TestFlow):
         )
         self.relaxmake = relaxmake
 
-        relax = PythonOPTemplate(RelaxABACUS,
+        relax = PythonOPTemplate(RunABACUS,
                                        slices=Slices("{{item}}", input_artifact=["input_abacus"],
                                                      output_artifact=["output_abacus"]),
                                        image=self.abacus_image_name, command=["python3"])
@@ -152,7 +151,7 @@ class ABACUSFlow(TestFlow):
             )
             self.propsmake = propsmake
 
-        props = PythonOPTemplate(PropsABACUS,
+        props = PythonOPTemplate(RunABACUS,
                                  slices=Slices("{{item}}", input_artifact=["input_abacus"],
                                                output_artifact=["output_abacus"]), image=self.abacus_image_name, command=["python3"])
 

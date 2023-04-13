@@ -18,11 +18,11 @@ from dflow.python import upload_packages
 upload_packages.append(__file__)
 
 from dflowautotest.lib.utils import return_prop_list
-try:
-    from dflowautotest.property.common_equi import (make_equi, post_equi)
-    from dflowautotest.property.common_prop import (make_property, post_property)
-except:
-    pass
+#try:
+#    from dflowautotest.property.common_equi import (make_equi, post_equi)
+#    from dflowautotest.property.common_prop import (make_property, post_property)
+#except:
+#    pass
 
 class RelaxMakeABACUS(OP):
     """
@@ -52,8 +52,9 @@ class RelaxMakeABACUS(OP):
             self,
             op_in: OPIO,
     ) -> OPIO:
-        cwd = os.getcwd()
+        from dflowautotest.property.common_equi import make_equi
 
+        cwd = os.getcwd()
         os.chdir(op_in["input"])
         work_d = os.getcwd()
         param_argv = op_in["param"]
@@ -88,7 +89,7 @@ class RelaxMakeABACUS(OP):
         return op_out
 
 
-class RelaxABACUS(OP):
+class RunABACUS(OP):
     """
     class for ABACUS calculation
     """
@@ -148,6 +149,8 @@ class RelaxPostABACUS(OP):
 
     @OP.exec_sign_check
     def execute(self, op_in: OPIO) -> OPIO:
+        from dflowautotest.property.common_equi import post_equi
+
         cwd = os.getcwd()
         os.chdir(str(op_in['input_all']) + op_in['path'])
         shutil.copytree(str(op_in['input_post']) + op_in['path'], './', dirs_exist_ok=True)
@@ -193,8 +196,9 @@ class PropsMakeABACUS(OP):
             self,
             op_in: OPIO,
     ) -> OPIO:
-        cwd = os.getcwd()
+        from dflowautotest.property.common_prop import make_property
 
+        cwd = os.getcwd()
         os.chdir(op_in["input"])
         work_d = os.getcwd()
         param_argv = op_in["param"]
@@ -235,40 +239,6 @@ class PropsMakeABACUS(OP):
         return op_out
 
 
-class PropsABACUS(OP):
-    """
-    class for ABACUS calculation
-    """
-
-    def __init__(self, infomode=1):
-        self.infomode = infomode
-
-    @classmethod
-    def get_input_sign(cls):
-        return OPIOSign({
-            'input_abacus': Artifact(Path),
-            'run_command': str
-        })
-
-    @classmethod
-    def get_output_sign(cls):
-        return OPIOSign({
-            'output_abacus': Artifact(Path, sub_path=False)
-        })
-
-    @OP.exec_sign_check
-    def execute(self, op_in: OPIO) -> OPIO:
-        cwd = os.getcwd()
-        os.chdir(op_in["input_abacus"])
-        cmd = op_in["run_command"]
-        subprocess.call(cmd, shell=True)
-        os.chdir(cwd)
-        op_out = OPIO({
-            "output_abacus": op_in["input_abacus"]
-        })
-        return op_out
-
-
 class PropsPostABACUS(OP):
     """
     class for analyzing calculation results
@@ -294,6 +264,8 @@ class PropsPostABACUS(OP):
 
     @OP.exec_sign_check
     def execute(self, op_in: OPIO) -> OPIO:
+        from dflowautotest.property.common_prop import post_property
+
         cwd = os.getcwd()
         os.chdir(str(op_in['input_all']) + op_in['path'])
         shutil.copytree(str(op_in['input_post']) + op_in['path'], './', dirs_exist_ok=True)

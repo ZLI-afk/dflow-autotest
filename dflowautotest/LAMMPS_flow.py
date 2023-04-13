@@ -24,11 +24,10 @@ from dflow.plugins.dispatcher import DispatcherExecutor
 from dflow.python import upload_packages
 from dflowautotest.LAMMPS_OPs import (
     RelaxMakeLAMMPS,
-    RelaxLAMMPS,
     RelaxPostLAMMPS,
     PropsMakeLAMMPS,
-    PropsLAMMPS,
-    PropsPostLAMMPS
+    PropsPostLAMMPS,
+    RunLAMMPS
 )
 from dflowautotest.TestFlow import TestFlow
 
@@ -109,7 +108,7 @@ class LAMMPSFlow(TestFlow):
         )
         self.relaxmake = relaxmake
 
-        relax = PythonOPTemplate(RelaxLAMMPS,
+        relax = PythonOPTemplate(RunLAMMPS,
                                        slices=Slices("{{item}}", input_artifact=["input_lammps"],
                                                      output_artifact=["output_lammps"]),
                                        image=self.dpmd_image_name, command=["python3"])
@@ -151,7 +150,7 @@ class LAMMPSFlow(TestFlow):
             )
         self.propsmake = propsmake
 
-        props = PythonOPTemplate(PropsLAMMPS,
+        props = PythonOPTemplate(RunLAMMPS,
                                  slices=Slices("{{item}}", input_artifact=["input_lammps"],
                                                output_artifact=["output_lammps"]), image=self.dpmd_image_name, command=["python3"])
 
