@@ -50,8 +50,9 @@ class RelaxMakeVASP(OP):
             self,
             op_in: OPIO,
     ) -> OPIO:
-        cwd = os.getcwd()
+        #from dflowautotest.property.common_equi import make_equi
 
+        cwd = os.getcwd()
         os.chdir(op_in["input"])
         work_d = os.getcwd()
         param_argv = op_in["param"]
@@ -113,6 +114,8 @@ class RelaxPostVASP(OP):
 
     @OP.exec_sign_check
     def execute(self, op_in: OPIO) -> OPIO:
+        #from dflowautotest.property.common_equi import post_equi
+
         cwd = os.getcwd()
         os.chdir(str(op_in['input_all']) + op_in['path'])
         shutil.copytree(str(op_in['input_post']), './', dirs_exist_ok=True)
@@ -134,7 +137,6 @@ class PropsMakeVASP(OP):
     """
     class for making calculation tasks
     """
-
     def __init__(self):
         pass
 
@@ -158,8 +160,9 @@ class PropsMakeVASP(OP):
             self,
             op_in: OPIO,
     ) -> OPIO:
-        cwd = os.getcwd()
+        #from dflowautotest.property.common_prop import make_property
 
+        cwd = os.getcwd()
         os.chdir(op_in["input"])
         work_d = os.getcwd()
         param_argv = op_in["param"]
@@ -227,6 +230,8 @@ class PropsPostVASP(OP):
 
     @OP.exec_sign_check
     def execute(self, op_in: OPIO) -> OPIO:
+        #from dflowautotest.property.common_prop import post_property
+
         cwd = os.getcwd()
         os.chdir(str(op_in['input_post']))
         for ii in op_in['task_names']:

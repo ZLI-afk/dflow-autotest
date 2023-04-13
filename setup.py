@@ -15,11 +15,13 @@ setuptools.setup(
     packages=setuptools.find_packages(),
     install_requires=[
         "pydflow>=1.6.27",
+        "pymatgen==2022.7.19",
         "lbg>=1.2.13",
         "dpdata>=0.2.13",
         "matplotlib",
         "seekpath",
-        "fpop"
+        "fpop",
+        "ase"
     ],
     classifiers=[
         "Programming Language :: Python :: 3",
