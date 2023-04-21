@@ -18,11 +18,6 @@ from dflow.python import upload_packages
 upload_packages.append(__file__)
 
 from dflowautotest.lib.utils import return_prop_list
-try:
-    from dflowautotest.property.common_equi import (make_equi, post_equi)
-    from dflowautotest.property.common_prop import (make_property, post_property)
-except:
-    pass
 
 class RelaxMakeABACUS(OP):
     """
@@ -52,7 +47,7 @@ class RelaxMakeABACUS(OP):
             self,
             op_in: OPIO,
     ) -> OPIO:
-        #from dflowautotest.property.common_equi import make_equi
+        from dflowautotest.property.common_equi import make_equi
 
         cwd = os.getcwd()
         os.chdir(op_in["input"])
@@ -149,7 +144,7 @@ class RelaxPostABACUS(OP):
 
     @OP.exec_sign_check
     def execute(self, op_in: OPIO) -> OPIO:
-        #from dflowautotest.property.common_equi import post_equi
+        from dflowautotest.property.common_equi import post_equi
 
         cwd = os.getcwd()
         os.chdir(str(op_in['input_all']) + op_in['path'])
@@ -196,7 +191,7 @@ class PropsMakeABACUS(OP):
             self,
             op_in: OPIO,
     ) -> OPIO:
-        #from dflowautotest.property.common_prop import make_property
+        from dflowautotest.property.common_prop import make_property
 
         cwd = os.getcwd()
         os.chdir(op_in["input"])
@@ -264,7 +259,7 @@ class PropsPostABACUS(OP):
 
     @OP.exec_sign_check
     def execute(self, op_in: OPIO) -> OPIO:
-        #from dflowautotest.property.common_prop import post_property
+        from dflowautotest.property.common_prop import post_property
 
         cwd = os.getcwd()
         os.chdir(str(op_in['input_all']) + op_in['path'])
