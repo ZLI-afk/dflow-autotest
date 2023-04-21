@@ -15,6 +15,11 @@ from monty.serialization import loadfn
 
 from dflowautotest.lib.utils import return_prop_list
 upload_packages.append(__file__)
+try:
+    from dflowautotest.property.common_equi import (make_equi, post_equi)
+    from dflowautotest.property.common_prop import (make_property, post_property)
+except:
+    pass
 
 
 class RelaxMakeVASP(OP):

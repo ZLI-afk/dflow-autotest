@@ -16,6 +16,11 @@ from dflow.python import upload_packages
 upload_packages.append(__file__)
 
 from dflowautotest.lib.utils import return_prop_list
+try:
+    from dflowautotest.property.common_equi import (make_equi, post_equi)
+    from dflowautotest.property.common_prop import (make_property, post_property)
+except:
+    pass
 
 class RelaxMakeLAMMPS(OP):
     """
